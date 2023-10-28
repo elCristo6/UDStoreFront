@@ -1,0 +1,14 @@
+/* BannerComponent.css */
+
+.banner-container {
+    height: 60px; /* Altura del contenedor */
+    overflow: hidden; /* Oculta cualquier cosa que se salga del contenedor */
+    position: relative; /* Posición relativa para que la imagen se ajuste correctamente */
+  }
+  
+  .banner-container img {
+   
+    height: 60px; /* La altura se ajusta automáticamente para mantener la proporción */
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin estirarse */
+  }
+  

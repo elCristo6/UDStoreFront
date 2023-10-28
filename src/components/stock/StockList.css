@@ -1,0 +1,208 @@
+/* Estilos para el componente StockList */
+.stock-list-container {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+
+
+.stock-list {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.stock-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stock-list th, .stock-list td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  text-align: left;
+}
+.stock-list .icon-button.green {
+  background-color: yellow; /* Color verde */
+  margin-left: 5px; /* Agregar margen a la derecha */
+  color: black;
+}
+
+.stock-list .icon-button.green:hover {
+  background-color: #45a049; /* Un tono más oscuro de verde al pasar el cursor */
+}
+
+
+.stock-list button {
+  background-color: greenyellow;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: black;
+}
+
+.stock-list button:hover {
+  background-color: #007799;
+}
+.search-bar {
+  margin: 10px 0;
+  width: 100%;
+  max-width: 400px; /* Ajusta este valor si quieres cambiar el ancho máximo */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 5px 10px; /* Reduzco el padding para que sea más angosto */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  margin-left: 2%;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+.category-dropdown {
+  height: 35px;
+
+}
+
+.category-dropdown select {
+  margin-top: 6%;
+  margin-left: 10%;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+
+}.input-style {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.input-style:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.product-count {
+  margin-top: 20px;
+  margin-left: 300px;
+  font-weight: normal; /* Establecer el peso de la fuente a normal */
+  font-size: 14px;     /* Establecer un tamaño de fuente más pequeño */
+  color: #888;         /* Establecer un color gris */
+  text-align: right;
+}
+
+.stock-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #333;  /* Borde añadido */
+  border-radius: 50%;  
+  margin-left: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2),
+             0 0 7px rgba(0, 0, 0, 0.2),
+             0 0 10px rgba(255, 255, 255, 0.5);
+  vertical-align: middle;  /* Alineación vertical */
+}
+
+.stock-indicator.red {
+  background-color: red;
+  box-shadow: 0 0 10px red,
+             0 0 15px red;
+}
+
+.stock-indicator.yellow {
+  background-color: yellow;
+  box-shadow: 0 0 10px yellow,
+             0 0 15px yellow;
+}
+
+.stock-indicator.green {
+  background-color: green;
+  box-shadow: 0 0 10px green,
+             0 0 15px green;
+}
+.stock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+}
+
+.stock-title {
+  font-size: 24px;
+  color: #333;
+  margin: 0; /* Remove default margin */
+}
+
+.add-stock-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-stock-button:hover {
+  background-color: #45a049;
+}
+.modal {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  position: relative;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover, .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

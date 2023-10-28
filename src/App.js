@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Navbar from './components/Navbar/NavBarComponent';
+import BannerComponent from './components/banner/BannerComponent';
+import LoginModal from './components/login/LoginComponent';
+import Sidebar from './components/sideBar/sideBar';
+import StockList from './components/stock/StockList';
+
 
 function App() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const [modalType, setModalType] = useState('login'); // Añade una nueva variable de estado para el tipo de modal
+
+  const handleShowLoginModal = (type) => {
+    setModalType(type);
+    setShowLoginModal(true);
+  };
+  const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BannerComponent />
+      <Navbar onShowLoginModal={handleShowLoginModal} />
+
+      <div className="contentContainer"> 
+        <Sidebar />
+        <StockList />
+      </div>
+      <LoginModal show={showLoginModal} onClose={handleCloseLoginModal} initialFormType={modalType} />
     </div>
   );
 }

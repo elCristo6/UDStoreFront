@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #092C61;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 40px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-left: 10px; 
+  
+}
+
+
+
+.nav-item {
+  position: relative;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0; /* Agregar relleno para crear un área clickeable más grande */
+  display: inline-block; /* Cambiar a display en línea para que los elementos estén uno al lado del otro */
+  border: 1px solid transparent; /* Agregar un borde transparente a cada elemento */
+  margin: 0; /* Eliminar cualquier margen */
+}
+
+.nav-item:hover {
+  background-color: transparent; /* Fondo transparente en estado hover */
+  color: white; /* Texto en color principal en estado hover */
+  border: 1px solid white; /* Borde blanco en estado hover */
+}
+
+.cart-icon {
+  height: 30px;
+  width: 30px;
+  margin-right: 20px;
+  margin-top: 15px;
+}
+.cart-text {
+  margin-left:-13px; /* Puedes ajustar este valor según tus preferencias para acercar o alejar el texto del icono */
+  font-size: 17px;
+  font-weight: bold;
+}
+.account-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;  
+  
+}
+
+.user-icon {
+  height: 38px;
+  width: 38px;
+}
+.user-text {
+  margin-top: 13px;
+  margin-left:-10px; /* Puedes ajustar este valor según tus preferencias para acercar o alejar el texto del icono */
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: 46px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  z-index: 1;
+  margin-top: 15px;
+}
+.logo-container{
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 130px;
+  padding: 0px 20px;
+  list-style: none; /* Esto elimina la flecha que podría aparecer */
+  margin: 0; /* Elimina cualquier margen */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 60%;
+}
+
+.menu-button {
+  background-color: lightgray;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.menu-button img,
+.search-button img {
+  height: 24px;
+  width: 24px;
+}
+
+.search-bar,
+.search-button,
+.menu-button {
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.search-bar {
+  flex-grow: 0.8;
+  font-size: 16px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 0;
+}
+
+.search-button {
+  background: #febd69;
+  border: none;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 20px;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+@media (max-width: 768px) {
+  .logo {
+    width: 80px;
+    padding: 5px 10px;
+  }
+
+  .search-container {
+    width: 50%;
+  }
+}
+.account-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  color: black;
+  z-index: 2;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.account-item:hover .account-dropdown {
+  display: block;
+}
+
+.dropdown-message {
+  text-align: center;
+  padding: 8px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px; 
+}
+
+.dropdown-button {
+  width: 40%;  /* Reducir el ancho del botón a un 80% del contenedor */
+  margin: auto;  /* Centrar el botón en el contenedor */
+  background-color: #007BFF;
+  border: none !important;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px; 
+  display: block;
+  cursor: pointer;
+  flex: 0.48;
+  border-top: 0;  /* Agregado para asegurar que no haya borde en la parte superior */
+  border-bottom: 0;  /* Agregado para asegurar que no haya borde en la parte inferior */
+
+}
+
+.dropdown-button + .dropdown-button {
+  border-top: 1px solid #ccc;
+}
+.dropdown-buttons {
+  border-top: none !important; /* Establecer el borde superior en ninguno */
+  border-bottom: none !important;
+  display: flex;
+  justify-content: space-between;
+}
+.nav-item.account-item:hover .account-dropdown {
+  display: block;
+}
