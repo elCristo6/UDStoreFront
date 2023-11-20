@@ -61,3 +61,28 @@
 .form-container *, .form-container *::before, .form-container *::after {
     box-sizing: border-box;
 }
+
+/* Estilo general para el desplegable */
+.input-group select {
+    width: 100%;
+    padding: 10px 10px 10px 40px; /* Ajuste el padding a la izquierda para el ícono */
+    border: none;
+    border-radius: 5px;
+    background-color: #f4f4f4; /* Color de fondo que combine con el diseño general */
+    font-size: 16px;
+
+    
+    outline: none; /* Quitar el borde azul al hacer foco */
+    appearance: none; /* Elimina el estilo por defecto de los navegadores */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo cuando se pasa el mouse por encima */
+.input-group select:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra un poco más oscura al pasar el mouse */
+}
+
+/* Estilo cuando se enfoca el desplegable */
+.input-group select:focus {
+    box-shadow: 0 0 15px rgba(0, 128, 0, 0.5); /* Sombra de color verde cuando está enfocado */
+}

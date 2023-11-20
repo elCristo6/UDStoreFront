@@ -1,0 +1,57 @@
+.newBillContainer {
+  display: flex;
+  height: 100%;
+}
+
+.menu {
+  flex-basis: 20%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Asegúrate de que el contenido está centrado */
+  background-color: #004aad;
+  color: white;
+  padding: 20px;
+  margin-bottom: 10px;
+  border: none;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.2em;
+  height: 80px; /* Establece una altura fija para todos los elementos del menú */
+}
+
+
+.menuItem:hover {
+  background-color: #003b80;
+}
+
+.icon {
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+  font-size: 1.5em; /* Ajusta el tamaño de los iconos */
+}
+
+.orangeButton {
+  background-color: #ffa500; /* Color naranja para el botón */
+}
+
+.orangeButton:hover {
+  background-color: #cc8400; /* Un naranja más oscuro para el hover */
+}
+
+.content {
+  flex-grow: 1;
+  padding: 10px;
+}
+.centered-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* O la altura deseada */
+}

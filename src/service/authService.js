@@ -34,3 +34,11 @@ export const registerUser = async (formData) => {
     throw error;
   }
 };
+export const consultarPorTelefono = async (telefono) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/${telefono}`);
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};

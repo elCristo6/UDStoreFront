@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FaAngleDown,
   FaAngleRight,
@@ -12,15 +12,10 @@ import {
 } from 'react-icons/fa';
 import './sideBar.css';
 
-const Sidebar = () => {
-  const [expandedMenu, setExpandedMenu] = useState('');
-
+const Sidebar = ({ expandedMenu, setExpandedMenu }) => {
+  
   const toggleMenu = (menuName) => {
-    if (expandedMenu === menuName) {
-      setExpandedMenu('');
-    } else {
       setExpandedMenu(menuName);
-    }
   };
 
   return (
@@ -35,7 +30,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="expanded-menu">
-        <div className="menu-item">
+        <div className="menu-item" onClick={() => toggleMenu('dashboard')}>
           <FaTachometerAlt /> 
           Dashboard
         </div>
@@ -43,18 +38,11 @@ const Sidebar = () => {
           <FaUsers /> 
           Clientes
         </div>
+
         <div className="menu-item" onClick={() => toggleMenu('productos')}>
           <FaBox />
           Productos
-          {expandedMenu === 'productos' ? <FaAngleDown /> : <FaAngleRight />}
         </div>
-        
-        {expandedMenu === 'productos' && (
-          <>
-            <div className="submenu-item">Lista de Productos</div>
-            <div className="submenu-item">Control de stock</div>
-          </>
-        )}
         
         <div className="menu-item" onClick={() => toggleMenu('existencias')}>
           <FaClipboardList />
@@ -73,9 +61,10 @@ const Sidebar = () => {
           <FaClipboardList /> 
           Control diario
         </div>
-        <div className="menu-item">
+
+        <div className="menu-item" onClick={() => toggleMenu('nuevaFactura')}>
           <FaChartPie /> 
-          Reportes
+          Nueva factura
         </div>
         
         <div className="menu-item">

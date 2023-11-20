@@ -3,7 +3,6 @@ import { FaInfo } from 'react-icons/fa';
 import { GrUpdate } from 'react-icons/gr';
 import { getProducts } from '../../service/productService';
 import NewProduct from '../modal/newProduct';
-
 import './StockList.css';
 
 const StockList = () => {
@@ -22,25 +21,36 @@ const StockList = () => {
     }, [allProducts]);
 
     useEffect(() => {
-        async function fetchProducts() {
-            try {
-                const response = await getProducts();
-                setProducts(response);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        }
-        
         fetchProducts();
-        filterProducts(searchTerm, selectedCategory);
-    }, [filterProducts, searchTerm, selectedCategory]);
+    }, []); // Este useEffect se encarga de obtener los productos al montar el componente.
 
+    const fetchProducts = async () => {
+        try {
+          const response = await getProducts();
+          if (response.success) {
+            setProducts(response.data); // Utiliza response.data en lugar de response
+          } else {
+            console.error("Error fetching products:", response.message);
+          }
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        }
+      };
+      
+
+    useEffect(() => {
+        filterProducts(searchTerm, selectedCategory);
+    }, [filterProducts, searchTerm, selectedCategory]); // Este useEffect se encarga de filtrar los productos según términos de búsqueda y categoría.
+
+
+    
     const openModal = () => {
         setIsModalOpen(true);
     };
     
     const closeModal = () => {
         setIsModalOpen(false);
+        fetchProducts(); 
     };
     
     const handleSearch = event => {
