@@ -1,13 +1,10 @@
 import React from 'react';
 import {
-  FaAngleDown,
-  FaAngleRight,
   FaBox,
   FaChartPie,
   FaClipboardList,
   FaCog,
   FaTachometerAlt,
-  FaUser,
   FaUsers
 } from 'react-icons/fa';
 import './sideBar.css';
@@ -19,60 +16,36 @@ const Sidebar = ({ expandedMenu, setExpandedMenu }) => {
   };
 
   return (
-    <div className="sidebar">
-      <div className="icon-container">
-        <div className="profile-container">
-          <FaUser size={50} />
-          <div className="profile-info">
-            <h2>Administrador 1</h2>
-            <p>cgonzalezsuta@gmail.com</p>
-          </div>
-        </div>
-      </div>
-      <div className="expanded-menu">
+    <div className="top-sidebar">
+      <div className="top-sidebar-menu">
         <div className="menu-item" onClick={() => toggleMenu('dashboard')}>
-          <FaTachometerAlt /> 
+          <FaTachometerAlt />
           Dashboard
         </div>
-        <div className="menu-item">
-          <FaUsers /> 
+        <div className="menu-item" onClick={() => toggleMenu('clientes')}>
+          <FaUsers />
           Clientes
         </div>
-
         <div className="menu-item" onClick={() => toggleMenu('productos')}>
           <FaBox />
           Productos
         </div>
-        
-        <div className="menu-item" onClick={() => toggleMenu('existencias')}>
+        <div className="menu-item" onClick={() => toggleMenu('inventario')}>
           <FaClipboardList />
           Inventario
-          {expandedMenu === 'existencias' ? <FaAngleDown /> : <FaAngleRight />}
         </div>
-        
-        {expandedMenu === 'existencias' && (
-          <>
-            <div className="submenu-item">Submenu Existencia 1</div>
-            <div className="submenu-item">Submenu Existencia 2</div>
-          </>
-        )}
-
-        <div className="menu-item">
-          <FaClipboardList /> 
+        <div className="menu-item" onClick={() => toggleMenu('controlDiario')}>
+          <FaClipboardList />
           Control diario
         </div>
-
         <div className="menu-item" onClick={() => toggleMenu('nuevaFactura')}>
-          <FaChartPie /> 
+          <FaChartPie />
           Nueva factura
         </div>
-        
-        <div className="menu-item">
-          <FaCog /> 
+        <div className="menu-item" onClick={() => toggleMenu('configuracion')}>
+          <FaCog />
           Configuracion
         </div>
-
-        
       </div>
     </div>
   );

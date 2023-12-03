@@ -1,6 +1,7 @@
 .newBillContainer {
   display: flex;
-  height: 100%;
+
+  min-height: 100vh;
 }
 
 .menu {
@@ -10,7 +11,7 @@
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-.menuItem {
+.newBillMenuItem {
   display: flex;
   align-items: center;
   justify-content: center; /* Asegúrate de que el contenido está centrado */
@@ -24,7 +25,8 @@
   cursor: pointer;
   border-radius: 5px;
   font-size: 1.2em;
-  height: 80px; /* Establece una altura fija para todos los elementos del menú */
+  height: auto; /* Establece una altura fija para todos los elementos del menú */
+  min-height: 80px;
 }
 
 
@@ -32,7 +34,7 @@
   background-color: #003b80;
 }
 
-.icon {
+.newBillIcon {
   margin-right: 10px; /* Espacio entre el icono y el texto */
   font-size: 1.5em; /* Ajusta el tamaño de los iconos */
 }
@@ -46,9 +48,14 @@
 }
 
 .content {
-  flex-grow: 1;
+  flex-grow: 0; /* Cambia flex-grow de 1 a 0 para evitar que se expanda y oculte otros elementos */
+  flex-basis: 80%; 
   padding: 10px;
+  overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
 }
+
+
+
 .centered-element {
   display: flex;
   justify-content: center;

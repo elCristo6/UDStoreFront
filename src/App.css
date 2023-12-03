@@ -1,21 +1,24 @@
+:root {
+  --top-bar-height: 135px; /* Ajusta esto para que coincida con la altura real del banner y navbar */
+}
+
 .App {
   text-align: center;
+  display: flex; /* Usa flex para la disposición de los componentes */
+  flex-direction: column; /* La dirección de los ítems principales es vertical */
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Asegúrate de que este valor es suficiente para que estos componentes se mantengan en la parte superior */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,17 +26,15 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.main-container {
+  position: relative;
+  top: 50px; 
+  display: flex; /* Nuevo contenedor flex para el sidebar y el contenido principal */
+  
+}
 
 .App-link {
   color: #61dafb;
-}
-.contentContainer {
-  display: flex;
-  flex-direction: row;
-}
-
-.sidebar {
-  width: 250px;
 }
 
 @keyframes App-logo-spin {

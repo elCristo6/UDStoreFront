@@ -1,0 +1,35 @@
+/* InvoicePreview.css */
+.invoice-preview {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto; /* o el ancho que prefieras */
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Asegúrate de que está sobre otros elementos */
+}
+
+.client-info, .items-list {
+  margin-bottom: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.item button {
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.item button:hover {
+  background-color: #d32f2f;
+}

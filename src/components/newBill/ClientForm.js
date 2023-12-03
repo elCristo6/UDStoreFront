@@ -26,7 +26,10 @@ class ClientForm extends React.Component {
     const storedData = sessionStorage.getItem('clientFormData');
 
     if (storedData) {
-      this.setState(JSON.parse(storedData));
+      this.setState(JSON.parse(storedData), () => {
+        // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+        this.props.onDataChange(this.state);
+      });
     }
   }
 
@@ -37,8 +40,10 @@ class ClientForm extends React.Component {
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
-    this.props.onDataChange({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+      this.props.onDataChange(this.state);
+    });
   };
 
   handleSearchClick = async () => {
@@ -55,6 +60,9 @@ class ClientForm extends React.Component {
           email: result.email || '',
           nitCedula: result.nitCedula || '',
           // Agrega más campos según los datos que recibas
+        }, () => {
+          // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+          this.props.onDataChange(this.state);
         });
       } else {
         // Limpiar los campos si no se encuentra ningún resultado y mostrar mensaje de error
@@ -64,11 +72,17 @@ class ClientForm extends React.Component {
           nitCedula: '',
           error: 'El usuario no existe.', // Mensaje de error
           // Limpia otros campos según sea necesario
+        }, () => {
+          // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+          this.props.onDataChange(this.state);
         });
       }
     } catch (error) {
       console.error('Error al realizar la consulta:', error);
-      this.setState({ error: 'Ocurrió un error al realizar la consulta.' }); // Mensaje de error
+      this.setState({ error: 'Ocurrió un error al realizar la consulta.' }, () => {
+        // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+        this.props.onDataChange(this.state);
+      }); // Mensaje de error
     } finally {
       this.setState({ isLoading: false });
     }
