@@ -1,17 +1,43 @@
-/* InvoicePreview.css */
+
 .invoice-preview {
   position: absolute;
   top: 0;
   right: 0;
-  width: auto; /* o el ancho que prefieras */
+  width: 80%; /* Ancho relativo al 80% del ancho de la ventana */
+  max-width: 765px; /* Ancho máximo para mantenerlo legible */
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1000; /* Asegúrate de que está sobre otros elementos */
+  z-index: 1000;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
 }
 
-.client-info, .items-list {
-  margin-bottom: 10px;
+
+
+.invoice-header {
+  text-align: center;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.client-info {
+  margin-top: 20px;
+}
+
+.client-info p {
+  margin: 5px 0;
+}
+
+.invoice-details {
+  margin-top: 20px;
+}
+
+.items-list {
+  border-collapse: collapse;
+  width: 100%;
 }
 
 .item {
@@ -19,17 +45,59 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.item button {
-  padding: 5px 10px;
-  background-color: #f44336;
-  color: white;
+.product-info {
+  flex: 1;
+  text-align: left;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+}
+
+.quantity button {
+  background-color: #3498db;
+  color: #fff;
   border: none;
   border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.quantity button:hover {
+  background-color: #2980b9;
+}
+
+.item-total {
+  font-weight: bold;
+}
+
+.delete-button button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
-.item button:hover {
-  background-color: #d32f2f;
+.delete-button button:hover {
+  background-color: #c0392b;
+}
+.total-label {
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.total-amount {
+  font-size: 24px;
+  color: #f44336;
+  margin-top: 5px;
 }

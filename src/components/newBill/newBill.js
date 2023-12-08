@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { FaCashRegister, FaProductHunt, FaUser } from 'react-icons/fa';
 import ClientForm from './ClientForm';
-import InvoicePreview from './InvoicePreview'; // Importa el componente InvoicePreview
+import InvoicePreview from './InvoicePreview';
 import './NewBill.css';
 import ProductList from './ProductSeleccionList';
 import SendOrderForm from './SendOrderForm';
 
-class NewBill extends React.Component {
+class NewBill extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,11 +19,9 @@ class NewBill extends React.Component {
         nitCedula: '',
         clientDescription: '',
       },
-      productData: [], // Inicializa productData como una matriz vacía
-      orderData: {
-        // Aquí puedes almacenar los datos relacionados con el pedido
-      },
-      showInvoicePreview: false,
+      productData: [],
+      orderData: {},
+      quantities: {},
     };
   }
 
@@ -34,43 +32,71 @@ class NewBill extends React.Component {
   handleClientDataChange = (data) => {
     this.setState((prevState) => ({
       clientData: { ...prevState.clientData, ...data },
-      showInvoicePreview: true, // Activa la vista previa al cambiar los datos del cliente
     }));
   };
 
   handleProductDataChange = (newProduct) => {
     this.setState((prevState) => ({
       productData: [...prevState.productData, newProduct],
-      showInvoicePreview: true, // Activa la vista previa al agregar productos
+      quantities: {
+        ...prevState.quantities,
+        [newProduct.id]: 1,
+      },
     }));
   };
 
   handleRemoveProduct = (productId) => {
-    this.setState((prevState) => ({
-      productData: prevState.productData.filter((product) => product.id !== productId),
-      showInvoicePreview: true, // Activa la vista previa al eliminar productos
-    }));
+    // Encuentra el índice del producto que deseas eliminar
+    const productIndex = this.state.productData.findIndex((product) => product.id === productId);
+
+    if (productIndex !== -1) {
+      // Crea una copia de la lista de productos sin el producto que deseas eliminar
+      const updatedProductData = [...this.state.productData];
+      updatedProductData.splice(productIndex, 1);
+
+      // Actualiza el estado con la lista de productos actualizada
+      this.setState({
+        productData: updatedProductData,
+      });
+    }
   };
 
   handleOrderDataChange = (data) => {
     this.setState({ orderData: { ...this.state.orderData, ...data } });
   };
-  
+
   handleProductSelect = (product) => {
-    // Agrega el producto seleccionado a la lista productData
     this.setState((prevState) => ({
       productData: [...prevState.productData, product],
-      showInvoicePreview: true,
+      quantities: {
+        ...prevState.quantities,
+        [product.id]: 1,
+      },
     }));
   };
 
-  // Función para ocultar InvoicePreview
-  hideInvoicePreview = () => {
-    this.setState({ showInvoicePreview: false });
+  increaseQuantity = (productId) => {
+    this.setState((prevState) => ({
+      quantities: {
+        ...prevState.quantities,
+        [productId]: prevState.quantities[productId] + 1,
+      },
+    }));
+  };
+
+  decreaseQuantity = (productId) => {
+    if (this.state.quantities[productId] > 1) {
+      this.setState((prevState) => ({
+        quantities: {
+          ...prevState.quantities,
+          [productId]: prevState.quantities[productId] - 1,
+        },
+      }));
+    }
   };
 
   renderActiveForm = () => {
-    const { activeMenu, showInvoicePreview } = this.state;
+    const { activeMenu, quantities } = this.state;
 
     switch (activeMenu) {
       case 'cliente':
@@ -83,8 +109,10 @@ class NewBill extends React.Component {
             <InvoicePreview
               clienteData={this.state.clientData}
               productosData={this.state.productData}
-              remisionData={this.state.remisionData} 
-
+              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
+              quantities={quantities}
+              increaseQuantity={this.increaseQuantity}
+              decreaseQuantity={this.decreaseQuantity}
             />
           </>
         );
@@ -95,28 +123,37 @@ class NewBill extends React.Component {
               data={this.state.productData}
               onDataChange={this.handleProductDataChange}
               onProductSelect={this.handleProductSelect}
+              quantities={quantities}
+              increaseQuantity={this.increaseQuantity}
+              decreaseQuantity={this.decreaseQuantity}
+              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
             />
             <InvoicePreview
               clienteData={this.state.clientData}
               productosData={this.state.productData}
-              remisionData={this.state.remisionData} // Asegúrate de que esta propiedad tenga datos definidos
+              quantities={quantities}
+              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
+              increaseQuantity={this.increaseQuantity}
+              decreaseQuantity={this.decreaseQuantity}
             />
           </>
         );
       case 'enviar':
         return (
           <>
-          <SendOrderForm
-            clientData={this.state.clientData}
-            productData={this.state.productData}
-            orderData={this.state.orderData}
-            onDataChange={this.handleOrderDataChange}
-            hideInvoicePreview={this.hideInvoicePreview} // Pasa la función para ocultar InvoicePreview
-          />
-           <InvoicePreview
+            <SendOrderForm
+              clientData={this.state.clientData}
+              productData={this.state.productData}
+              orderData={this.state.orderData}
+              onDataChange={this.handleOrderDataChange}
+            />
+            <InvoicePreview
               clienteData={this.state.clientData}
               productosData={this.state.productData}
-              remisionData={this.state.remisionData} // Asegúrate de que esta propiedad tenga datos definidos
+              quantities={quantities}
+              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
+              increaseQuantity={this.increaseQuantity}
+              decreaseQuantity={this.decreaseQuantity}
             />
           </>
         );
