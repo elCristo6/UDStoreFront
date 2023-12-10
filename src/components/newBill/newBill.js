@@ -21,7 +21,7 @@ class NewBill extends Component {
       },
       productData: [],
       orderData: {},
-      quantities: {},
+     
     };
   }
 
@@ -35,15 +35,7 @@ class NewBill extends Component {
     }));
   };
 
-  handleProductDataChange = (newProduct) => {
-    this.setState((prevState) => ({
-      productData: [...prevState.productData, newProduct],
-      quantities: {
-        ...prevState.quantities,
-        [newProduct.id]: 1,
-      },
-    }));
-  };
+
 
   handleRemoveProduct = (productId) => {
     // Encuentra el índice del producto que deseas eliminar
@@ -66,37 +58,54 @@ class NewBill extends Component {
   };
 
   handleProductSelect = (product) => {
-    this.setState((prevState) => ({
-      productData: [...prevState.productData, product],
-      quantities: {
-        ...prevState.quantities,
-        [product.id]: 1,
-      },
-    }));
+    this.setState((prevState) => {
+      // Verifica si el producto ya está en la lista por su _id
+      const isProductAdded = prevState.productData.some(item => item._id === product._id);
+      if (!isProductAdded) {
+        // Si no está, añade el producto a la lista
+        return {
+          productData: [...prevState.productData, { ...product, quantity: 1 }],
+        };
+      } else {
+        // Opcionalmente, podrías querer manejar el caso cuando el producto ya está añadido
+        return {};
+      }
+    });
   };
-
+  
+  
   increaseQuantity = (productId) => {
+    console.log('Incrementing product with ID:', productId);
     this.setState((prevState) => ({
-      quantities: {
-        ...prevState.quantities,
-        [productId]: prevState.quantities[productId] + 1,
-      },
+      productData: prevState.productData.map((product) => {
+        console.log('Current product ID:', product.id);
+        if (product._id === productId) {
+          const newQuantity = product.quantity ? product.quantity + 1 : 1;
+          console.log('New quantity for product:', newQuantity);
+          return { ...product, quantity: newQuantity };
+        }
+        return product;
+      }),
+    }), () => console.log(this.state.productData));
+  };
+  
+  
+  decreaseQuantity = (productId) => {
+    console.log('Increasing quantity for product ID:', productId);
+    this.setState((prevState) => ({
+      productData: prevState.productData.map((product) => {
+        if (product._id === productId && product.quantity > 1) {
+          const newQuantity = product.quantity - 1;
+          return { ...product, quantity: newQuantity };
+        }
+        return product;
+      }),
     }));
   };
-
-  decreaseQuantity = (productId) => {
-    if (this.state.quantities[productId] > 1) {
-      this.setState((prevState) => ({
-        quantities: {
-          ...prevState.quantities,
-          [productId]: prevState.quantities[productId] - 1,
-        },
-      }));
-    }
-  };
+  
 
   renderActiveForm = () => {
-    const { activeMenu, quantities } = this.state;
+    const { activeMenu } = this.state;
 
     switch (activeMenu) {
       case 'cliente':
@@ -110,9 +119,8 @@ class NewBill extends Component {
               clienteData={this.state.clientData}
               productosData={this.state.productData}
               onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              quantities={quantities}
-              increaseQuantity={this.increaseQuantity}
-              decreaseQuantity={this.decreaseQuantity}
+              onDecrement={this.decreaseQuantity}
+              onIncrement={this.increaseQuantity}
             />
           </>
         );
@@ -123,18 +131,14 @@ class NewBill extends Component {
               data={this.state.productData}
               onDataChange={this.handleProductDataChange}
               onProductSelect={this.handleProductSelect}
-              quantities={quantities}
-              increaseQuantity={this.increaseQuantity}
-              decreaseQuantity={this.decreaseQuantity}
-              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
             />
             <InvoicePreview
+            
               clienteData={this.state.clientData}
               productosData={this.state.productData}
-              quantities={quantities}
               onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              increaseQuantity={this.increaseQuantity}
-              decreaseQuantity={this.decreaseQuantity}
+              onIncrement={this.increaseQuantity}
+              onDecrement={this.decreaseQuantity}
             />
           </>
         );
@@ -150,10 +154,9 @@ class NewBill extends Component {
             <InvoicePreview
               clienteData={this.state.clientData}
               productosData={this.state.productData}
-              quantities={quantities}
               onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              increaseQuantity={this.increaseQuantity}
-              decreaseQuantity={this.decreaseQuantity}
+              onIncrement={this.increaseQuantity}
+              onDecrement={this.decreaseQuantity}
             />
           </>
         );

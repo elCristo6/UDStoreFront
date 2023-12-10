@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import './InvoicePreview.css';
 
 function ProductItem(props) {
   const { product, onRemoveProduct, onIncrement, onDecrement } = props;
-  const [quantity, setQuantity] = useState(product.quantity);
-
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-    onIncrement(product.id);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-      onDecrement(product.id);
-    }
-  };
 
   return (
     <div className="item">
@@ -25,16 +12,17 @@ function ProductItem(props) {
         <span className="item-price">${product.price}</span>
       </div>
       <div className="quantity">
-        <button onClick={handleDecrement}>
-          <FaMinus />
-        </button>
-        <span>{quantity}</span>
-        <button onClick={handleIncrement}>
-          <FaPlus />
-        </button>
+      <button onClick={() => onDecrement(product._id)}>
+        <FaMinus />
+      </button>
+      <span>{product.quantity}</span>
+      <button onClick={() => onIncrement(product._id)}>
+        <FaPlus />
+      </button>
+
       </div>
       <div className="item-total">
-        ${product.price * quantity}
+        ${product.price * product.quantity}
       </div>
       <div className="delete-button">
         <button onClick={() => onRemoveProduct(product.id)}>
@@ -46,48 +34,10 @@ function ProductItem(props) {
 }
 
 function InvoicePreview(props) {
-  const { clienteData, productosData, onRemoveProduct } = props;
-  const [productData, setProductData] = useState([]);
-
-  useEffect(() => {
-    // Initialize productData with quantities from productosData
-    const initialProductData = productosData.map((item) => ({
-      ...item,
-      quantity: 0,
-    }));
-    setProductData(initialProductData);
-  }, [productosData]);
-
-  const handleIncrement = (productId) => {
-    const updatedProductData = productData.map((item) => {
-      if (item.id === productId) {
-        // Incrementa la cantidad del producto seleccionado
-        return { ...item, quantity: item.quantity + 1 };
-      }
-      return item;
-    });
-    // Actualiza el estado de productData con los datos actualizados
-    setProductData(updatedProductData);
-  };
-
-  const handleDecrement = (productId) => {
-    const updatedProductData = productData.map((item) => {
-      if (item.id === productId && item.quantity > 0) {
-        // Disminuye la cantidad del producto seleccionado
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
-    // Actualiza el estado de productData con los datos actualizados
-    setProductData(updatedProductData);
-  };
+  const { clienteData, productosData, onRemoveProduct, onIncrement, onDecrement } = props;
 
   const calculateTotal = () => {
-    let total = 0;
-    productData.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    return total;
+    return productosData.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   return (
@@ -109,13 +59,13 @@ function InvoicePreview(props) {
             <div className="item-total">Total</div>
             <div className="delete-button"></div>
           </div>
-          {productData.map((item) => (
+          {productosData.map((item) => (
             <ProductItem
-              key={item.id}
+              key={item._id}
               product={item}
               onRemoveProduct={onRemoveProduct}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
+              onIncrement={onIncrement}
+              onDecrement={onDecrement}
             />
           ))}
         </div>
