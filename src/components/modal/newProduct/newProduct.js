@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaBox, FaClipboard, FaDollarSign, FaRegListAlt } from 'react-icons/fa';
-import { addProduct } from '../../service/productService';
+import { addProduct } from '../../../service/productService';
 import './newProduct.css';
 
 function NewProduct({ closeModal }) {
@@ -12,7 +12,7 @@ function NewProduct({ closeModal }) {
     const [stock, setStock] = useState('');
 
     // Ejemplo de categorías. En una aplicación real, podrías obtener estas desde tu API.
-    const categories = ['Electrónica', 'Impresion 3D', 'Robotica', 'Kits Educativos','Sensores','Componentes','Amplificadores'];
+    const categories = ['Electrónica', 'Impresion 3D', 'Robotica', 'Kits Educativos', 'Sensores', 'Componentes', 'Amplificadores'];
     
     const resetForm = () => {
         setProductName('');
@@ -27,8 +27,8 @@ function NewProduct({ closeModal }) {
         event.preventDefault();
     
         // Convierte los valores a sus respectivos tipos de datos
-        const productPrice = Number(price);
-        const productStock = Number(stock);
+        const productPrice = parseFloat(price); // Cambiado a parseFloat
+        const productStock = parseInt(stock, 10); // Cambiado a parseInt con base 10
         const productBox = box.split(',').map(Number); // Asume que introduces las cajas separadas por comas
     
         const productData = {
@@ -46,16 +46,14 @@ function NewProduct({ closeModal }) {
             resetForm();        // Limpia los campos
             closeModal();       // Cierra el modal
         } catch (error) {
-            alert("Error al agregar el producto:", error.message);
+            alert("Error al agregar el producto: " + error.message); // Concatenación corregida
         }
     };
-    
 
     return (
         <div className="form-container">
             <h2>Agregar Producto</h2>
             <form onSubmit={handleSubmit}>
-                {/* ... Los campos existentes ... */}
                 <div className="input-group">
                     <FaRegListAlt className="input-icon"/>
                     <input 
@@ -63,7 +61,7 @@ function NewProduct({ closeModal }) {
                         name="productName" 
                         placeholder="Nombre del producto" 
                         value={productName} 
-                        onChange={e => setProductName(e.target.value)}
+                        onChange={(e) => setProductName(e.target.value)}
                     />
                 </div>
                 <div className="input-group">
@@ -72,7 +70,7 @@ function NewProduct({ closeModal }) {
                         name="description" 
                         placeholder="Descripción del producto"
                         value={description}
-                        onChange={e => setDescription(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </div>
                 <div className="input-group">
@@ -82,7 +80,7 @@ function NewProduct({ closeModal }) {
                         name="price" 
                         placeholder="Precio" 
                         value={price}
-                        onChange={e => setPrice(e.target.value)}
+                        onChange={(e) => setPrice(e.target.value)}
                     />
                 </div>
                 <div className="input-group">
@@ -92,14 +90,14 @@ function NewProduct({ closeModal }) {
                         name="box" 
                         placeholder="Caja" 
                         value={box}
-                        onChange={e => setBox(e.target.value)}
+                        onChange={(e) => setBox(e.target.value)}
                     />
                 </div>
 
                 {/* Desplegable para la selección de Categoría */}
                 <div className="input-group">
                     <FaRegListAlt className="input-icon"/>
-                    <select name="category" value={category} onChange={e => setCategory(e.target.value)}>
+                    <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="" disabled>Selecciona una categoría</option>
                         {categories.map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
@@ -115,7 +113,7 @@ function NewProduct({ closeModal }) {
                         name="stock" 
                         placeholder="Stock" 
                         value={stock}
-                        onChange={e => setStock(e.target.value)}
+                        onChange={(e) => setStock(e.target.value)}
                     />
                 </div>
                 

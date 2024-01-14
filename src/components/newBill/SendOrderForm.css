@@ -1,0 +1,103 @@
+/* SendOrderForm.css */
+
+.sof-container {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.sof-titulo {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #004aad;
+}
+
+.sof-total {
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.sof-total p {
+  margin: 0;
+}
+
+.sof-total-amount {
+  font-size: 20px;
+  color: #004aad;
+}
+
+.sof-medio-pago {
+  margin-bottom: 20px;
+}
+
+.sof-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.sof-button {
+  background-color: #004aad;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+.seleccionado {
+  background-color: orange;
+}
+
+.sof-form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sof-input {
+  width: 80px;
+  font-size: 14px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #004aad;
+}
+
+.sof-amounts {
+  text-align: center;
+}
+
+.sof-amounts p {
+  margin: 5px 0;
+}
+
+.sof-total-amount,
+.sof-cambio-amount {
+  font-size: 18px;
+  font-weight: bold;
+  color: #004aad;
+}
+
+.sof-terminar-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.sof-terminar-button:hover {
+  background-color: #1d822c;
+}

@@ -11,7 +11,8 @@ class ClientForm extends React.Component {
       email: '',
       clientDescription: '',
       name: '', 
-      nitCedula: '', 
+      nitCedula: '',
+      selectedProduct: 'prod1', // Valor por defecto seleccionado: 'Cliente'
       products: [
         { id: 'prod1', name: 'Cliente' },
         { id: 'prod2', name: 'Mostrador' },
@@ -47,31 +48,44 @@ class ClientForm extends React.Component {
   };
 
   handleSearchClick = async () => {
-    const { phoneNumber } = this.state;
+    const { phoneNumber, selectedProduct } = this.state;
     this.setState({ isLoading: true, error: null });
 
     try {
-      const result = await consultarPorTelefono(phoneNumber);
+      // Realizar la consulta solo si el producto seleccionado es "Cliente"
+      if (selectedProduct === 'prod1') {
+        const result = await consultarPorTelefono(phoneNumber);
 
-      if (result) {
-        // Autocompletar los campos con los datos obtenidos
-        this.setState({
-          name: result.name || '',
-          email: result.email || '',
-          nitCedula: result.nitCedula || '',
-          // Agrega más campos según los datos que recibas
-        }, () => {
-          // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
-          this.props.onDataChange(this.state);
-        });
+        if (result) {
+          // Autocompletar los campos con los datos obtenidos
+          this.setState({
+            name: result.name || '',
+            email: result.email || '',
+            nitCedula: result.cc || '',
+            // Agrega más campos según los datos que recibas
+          }, () => {
+            // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+            this.props.onDataChange(this.state);
+          });
+        } else {
+          // Limpiar los campos si no se encuentra ningún resultado y mostrar mensaje de error
+          this.setState({
+            name: '',
+            email: '',
+            nitCedula: '',
+            error: 'El usuario no existe.', // Mensaje de error
+            // Limpia otros campos según sea necesario
+          }, () => {
+            // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+            this.props.onDataChange(this.state);
+          });
+        }
       } else {
-        // Limpiar los campos si no se encuentra ningún resultado y mostrar mensaje de error
+        // Si el producto es "Mostrador", establecer el nombre predeterminado y limpiar otros campos
         this.setState({
-          name: '',
+          name: selectedProduct,
           email: '',
           nitCedula: '',
-          error: 'El usuario no existe.', // Mensaje de error
-          // Limpia otros campos según sea necesario
         }, () => {
           // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
           this.props.onDataChange(this.state);
@@ -94,11 +108,45 @@ class ClientForm extends React.Component {
     }
   };
 
+  handleProductSelect = (productId) => {
+    if (productId === 'prod2') { // Verifica si el producto seleccionado es 'Mostrador'
+      this.setState({
+        selectedProduct: productId,
+        name: 'mostrador', // Configura el campo 'name' con 'MOSTRADOR'
+        phoneNumber: '', // Vacía el campo de teléfono
+        email: '', // Vacía el campo de correo electrónico
+        nitCedula: '', // Vacía el campo de NIT/Cédula
+        clientDescription: '', // Vacía la descripción del cliente
+        error: null, // Limpia cualquier mensaje de error
+      }, () => {
+        // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
+        this.props.onDataChange(this.state);
+      });
+    } else {
+      // Si no es 'Mostrador', actualiza el estado como lo hacías anteriormente
+      this.setState({ selectedProduct: productId }, () => {
+        this.props.onDataChange(this.state);
+      });
+    }
+  };
+
   render() {
     return (
       <div className="clientForm-container">
         <div className="clientForm-section">
           <div className="clientForm-section-title">1. Información General</div>
+
+          <div className="clientForm-form-row">
+            {this.state.products.map((product) => (
+              <button
+                key={product.id}
+                className={`clientForm-product-button ${this.state.selectedProduct === product.id ? 'selected' : ''}`}
+                onClick={() => this.handleProductSelect(product.id)}
+              >
+                {product.name}
+              </button>
+            ))}
+          </div>
 
           <div className="clientForm-form-row">
             <label className="clientForm-label" htmlFor="phone-input"></label>

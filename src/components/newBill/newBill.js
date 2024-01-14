@@ -10,6 +10,8 @@ class NewBill extends Component {
   constructor(props) {
     super(props);
     this.state = {
+     
+      paymentMethod: '', // Inicialmente vacío
       activeMenu: 'cliente',
       clientData: {
         selectedProduct: '',
@@ -24,7 +26,8 @@ class NewBill extends Component {
      
     };
   }
-
+  
+    
   setActiveMenu = (menu) => {
     this.setState({ activeMenu: menu });
   };
@@ -36,10 +39,14 @@ class NewBill extends Component {
   };
 
 
-
+  calculateTotal = () => {
+    const { productData } = this.state;
+    return productData.reduce((total, product) => total + (product.price * product.quantity), 0);
+  };
+  
   handleRemoveProduct = (productId) => {
     // Encuentra el índice del producto que deseas eliminar
-    const productIndex = this.state.productData.findIndex((product) => product.id === productId);
+    const productIndex = this.state.productData.findIndex((product) => product._id === productId);
 
     if (productIndex !== -1) {
       // Crea una copia de la lista de productos sin el producto que deseas eliminar
@@ -73,40 +80,50 @@ class NewBill extends Component {
     });
   };
   
-  
   increaseQuantity = (productId) => {
-    console.log('Incrementing product with ID:', productId);
-    this.setState((prevState) => ({
-      productData: prevState.productData.map((product) => {
-        console.log('Current product ID:', product.id);
-        if (product._id === productId) {
-          const newQuantity = product.quantity ? product.quantity + 1 : 1;
-          console.log('New quantity for product:', newQuantity);
-          return { ...product, quantity: newQuantity };
-        }
-        return product;
-      }),
-    }), () => console.log(this.state.productData));
-  };
+    const { productData } = this.state;
+    const product = productData.find((product) => product._id === productId);
   
+    if (product && product.quantity < product.stock) {
+      this.setState((prevState) => ({
+        productData: prevState.productData.map((item) => {
+          if (item._id === productId) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+          return item;
+        }),
+      }));
+    }
+  };
   
   decreaseQuantity = (productId) => {
-    console.log('Increasing quantity for product ID:', productId);
-    this.setState((prevState) => ({
-      productData: prevState.productData.map((product) => {
-        if (product._id === productId && product.quantity > 1) {
-          const newQuantity = product.quantity - 1;
-          return { ...product, quantity: newQuantity };
-        }
-        return product;
-      }),
-    }));
+    const { productData } = this.state;
+    const product = productData.find((product) => product._id === productId);
+  
+    if (product && product.quantity > 1) {
+      this.setState((prevState) => ({
+        productData: prevState.productData.map((item) => {
+          if (item._id === productId) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+          return item;
+        }),
+      }));
+    }
   };
   
-
+  getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Agrega un cero delante si es necesario
+    const day = String(today.getDate()).padStart(2, '0'); // Agrega un cero delante si es necesario
+    return `${year}-${month}-${day}`;
+  }
+  
   renderActiveForm = () => {
     const { activeMenu } = this.state;
-
+    const totalOrder = this.calculateTotal(); // Calcular el total
+    const currentDate = this.getCurrentDate();
     switch (activeMenu) {
       case 'cliente':
         return (
@@ -121,6 +138,9 @@ class NewBill extends Component {
               onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
               onDecrement={this.decreaseQuantity}
               onIncrement={this.increaseQuantity}
+              invoiceNumber="12345"
+              currentDate={currentDate}
+              totalOrder={totalOrder}
             />
           </>
         );
@@ -133,12 +153,14 @@ class NewBill extends Component {
               onProductSelect={this.handleProductSelect}
             />
             <InvoicePreview
-            
               clienteData={this.state.clientData}
               productosData={this.state.productData}
               onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
               onIncrement={this.increaseQuantity}
               onDecrement={this.decreaseQuantity}
+              invoiceNumber="12345"
+              currentDate={currentDate}
+              totalOrder={totalOrder}
             />
           </>
         );
@@ -150,6 +172,8 @@ class NewBill extends Component {
               productData={this.state.productData}
               orderData={this.state.orderData}
               onDataChange={this.handleOrderDataChange}
+              totalOrder={totalOrder}
+              
             />
             <InvoicePreview
               clienteData={this.state.clientData}
@@ -157,6 +181,9 @@ class NewBill extends Component {
               onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
               onIncrement={this.increaseQuantity}
               onDecrement={this.decreaseQuantity}
+              invoiceNumber="12345"
+              currentDate={currentDate}
+              totalOrder={totalOrder}
             />
           </>
         );

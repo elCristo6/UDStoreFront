@@ -1,63 +1,82 @@
-
 .invoice-preview {
   position: absolute;
   top: 0;
   right: 0;
-  width: 80%; /* Ancho relativo al 80% del ancho de la ventana */
-  max-width: 765px; /* Ancho máximo para mantenerlo legible */
+  width: 60%; /* Ajusta el ancho para una mejor presentación */
+  max-width: 600px; /* Ancho máximo más compacto */
   padding: 20px;
   background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  overflow: hidden; /* Asegura que todo esté dentro de los bordes redondeados */
 }
-
-
 
 .invoice-header {
   text-align: center;
-  background-color: #3498db;
+  background-color: #4a69bd;
   color: #fff;
-  padding: 10px;
-  border-radius: 10px 10px 0 0;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+  font-size: 1.5rem;
+  margin-bottom: 10px; /* Espacio después del encabezado */
+}
+
+.invoice-date {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 10px; /* Espacio después de la fecha */
 }
 
 .client-info {
-  margin-top: 20px;
+  margin-bottom: 20px; /* Espacio antes de los detalles de la factura */
 }
 
 .client-info p {
-  margin: 5px 0;
+  margin: 3px 0;
+  font-size: 0.9rem;
 }
 
 .invoice-details {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .items-list {
-  border-collapse: collapse;
   width: 100%;
+  margin-bottom: 20px; /* Espacio antes del total */
 }
 
 .item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  background-color: #f2f2f2;
-  padding: 10px;
+  background-color: #f8f9fa;
   border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e3e3e3;
 }
 
 .product-info {
-  flex: 1;
+  flex: 2;
   text-align: left;
+}
+
+.item-name {
+  font-weight: 600;
+}
+
+.item-price {
+  margin-left: 15px;
+  font-size: 0.9rem;
 }
 
 .quantity {
   display: flex;
   align-items: center;
+  margin-right: 15px; /* Ajuste de margen */
 }
 
 .quantity button {
@@ -66,38 +85,64 @@
   border: none;
   border-radius: 4px;
   padding: 5px 10px;
-  cursor: pointer;
   margin: 0 5px;
+  cursor: pointer;
 }
 
-.quantity button:hover {
-  background-color: #2980b9;
+.quantity span {
+  min-width: 30px;
+  text-align: center;
 }
 
 .item-total {
+  flex-grow: 0;
+  margin-left: 15px;
   font-weight: bold;
+  text-align: right;
 }
 
 .delete-button button {
-  background-color: #e74c3c;
+  background-color: #eb3b5a;
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .delete-button button:hover {
-  background-color: #c0392b;
+  background-color: #fc5c65;
 }
+
 .total-label {
-  font-weight: bold;
-  margin-top: 10px;
-  font-size: 18px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: right;
 }
 
 .total-amount {
-  font-size: 24px;
-  color: #f44336;
-  margin-top: 5px;
+  font-size: 1.6rem;
+  color: #eb3b5a;
+  text-align: right;
+}
+
+.finish-invoice-button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.finish-invoice-button button {
+  background-color: #4CAF50; /* Color verde */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s; /* Transición suave del color de fondo al pasar el mouse */
+}
+
+.finish-invoice-button button:hover {
+  background-color: #45a049; /* Cambia el color al pasar el mouse */
 }

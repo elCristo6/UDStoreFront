@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getProducts } from '../../service/productService';
 import './ProductSelectionList.css';
 
-const ProductSelectionList = ({ onProductSelect }) => { // Cambia el nombre de la prop aquí
+const ProductSelectionList = ({ onProductSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [allProducts, setProducts] = useState([]);
@@ -10,6 +10,12 @@ const ProductSelectionList = ({ onProductSelect }) => { // Cambia el nombre de l
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  const getStockIndicator = stock => {
+    if (stock <= 0) return 'red';
+    if (stock <= 8) return 'yellow';
+    return 'green';
+  };
 
   const fetchProducts = async () => {
     try {
@@ -35,6 +41,13 @@ const ProductSelectionList = ({ onProductSelect }) => { // Cambia el nombre de l
     setSearchTerm(event.target.value);
   };
 
+  const handleProductClick = (product) => {
+    if (product.stock > 0) {
+      // Verificar si la cantidad es mayor que cero antes de agregarlo
+      onProductSelect(product);
+    }
+  };
+
   return (
     <div className="product-selection-container">
       <div className="product-selection-header">
@@ -56,17 +69,30 @@ const ProductSelectionList = ({ onProductSelect }) => { // Cambia el nombre de l
             <tr>
               <th>Producto</th>
               <th>Precio</th>
+              <th>Cantidad</th>
             </tr>
           </thead>
           <tbody>
             {filteredProducts.map((product, index) => (
               <tr
                 key={index}
-                onClick={() => onProductSelect(product)} // Usa la prop onProductSelect aquí
-                style={{ cursor: 'pointer' }}
+                onClick={() => handleProductClick(product)} // Validar la cantidad antes de agregar
+                style={{
+                  cursor: product.stock > 0 ? 'pointer' : 'default',
+                  backgroundColor: product.stock > 0 ? '' : '#ccc',
+                }}
               >
                 <td className="product-name">{product.name}</td>
                 <td>${product.price}</td>
+                <td className="stock-cell">
+                  <span
+                    className={`stock-indicator ${getStockIndicator(
+                      product.stock
+                    )}`}
+                  ></span>
+                  <span className="stock-space"></span>
+                  <span className="stock-number">{product.stock}</span>
+                </td>
               </tr>
             ))}
           </tbody>

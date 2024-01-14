@@ -1,10 +1,14 @@
+/* ClientForm.css */
+
 .clientForm-container {
-  max-width: 600px;
-  margin: auto;
+  background-color: #f4f4f4;
   padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%; /* Ajusta el ancho al 100% */
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .clientForm-section {
@@ -13,13 +17,13 @@
 
 .clientForm-section-title {
   font-size: 24px;
-  color: #333;
+  color: #004aad;
   margin-bottom: 15px;
 }
 
 .clientForm-form-row {
   display: flex;
-  align-items: center;
+  justify-content: center;  /* Añade este estilo para centrar los botones */
   margin-bottom: 15px;
 }
 
@@ -37,14 +41,14 @@
 
 .clientForm-input-icon {
   margin-right: 10px;
-  font-size: 24px; /* Tamaño de los iconos */
+  font-size: 24px;
 }
 
 .clientForm-input,
 .clientForm-select {
   flex-grow: 1;
   padding: 8px;
-  border-radius: 4px 0px 0px;
+  border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
 }
 
@@ -58,27 +62,41 @@
 }
 
 .clientForm-search-button {
-  background-color: #007bff; /* Color de fondo del botón */
-  color: #fff; /* Color de texto del botón */
+  background-color: #004aad;
+  color: #fff;
   border: none;
-  padding: 6px 10px; /* Espaciado interno del botón */
+  padding: 6px 10px;
   margin-bottom: 9px;
   cursor: pointer;
-  border-radius: 0 px 4px; /* Borde redondeado */
+  border-radius: 0 4px 4px 0;
   display: flex;
-  align-items: center; /* Centra el icono verticalmente */
+  align-items: center;
 }
 
 .clientForm-search-icon {
-  font-size: 20px; /* Tamaño del icono de búsqueda */
-  margin-right: 8px; /* Espaciado entre el icono y el texto */
+  font-size: 20px;
+  margin-right: 8px;
 }
 
 .clientForm-search-button:hover {
-  background-color: #0056b3; /* Cambia el color de fondo al pasar sobre el botón */
+  background-color: #003d8a;
 }
 
 .clientForm-error {
-  color: red; /* Color del texto del mensaje de error */
-  margin-top: 5px; /* Espacio en la parte superior del mensaje de error */
+  color: red;
+  margin-top: 5px;
+}
+.clientForm-product-button {
+  background-color: #004aad;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.clientForm-product-button.selected {
+  background-color: orange;
 }

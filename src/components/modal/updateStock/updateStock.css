@@ -1,0 +1,92 @@
+.update-stock-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+}
+
+.update-stock-input-group {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.update-stock-input-group > * {
+    vertical-align: middle;
+}
+
+.update-stock-input-icon {
+    position: absolute;
+    left: 15px; /* Ajustado a 15px para mover más a la derecha */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+}
+
+.update-stock-input,
+.update-stock-textarea,
+.update-stock-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: black;
+    box-sizing: border-box;
+}
+
+.update-stock-input,
+.update-stock-textarea {
+    padding-left: 40px; /* Ajuste el padding a la izquierda para el ícono */
+}
+
+.update-stock-save-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-stock-save-button:hover {
+    background-color: #45a049;
+}
+
+.update-stock-form-container h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.update-stock-form-container * {
+    box-sizing: border-box;
+}
+
+/* Estilo general para el desplegable */
+.update-stock-input-group select {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f4f4f4; /* Color de fondo que combine con el diseño general */
+    font-size: 16px;
+    outline: none; /* Quitar el borde azul al hacer foco */
+    appearance: none; /* Elimina el estilo por defecto de los navegadores */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-indent: 34px;
+   
+}
+
+/* Estilo cuando se pasa el mouse por encima */
+.update-stock-input-group select:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra un poco más oscura al pasar el mouse */
+}
+
+/* Estilo cuando se enfoca el desplegable */
+.update-stock-input-group select:focus {
+    box-shadow: 0 0 15px rgba(0, 128, 0, 0.5); /* Sombra de color verde cuando está enfocado */
+}
+.update-stock-modal {
+    margin-top: 100px; /* Ajusta el valor según tus necesidades */
+}
