@@ -1,5 +1,7 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { FaCashRegister, FaProductHunt, FaUser } from 'react-icons/fa';
+import { Button, Col, Row } from 'reactstrap';
 import ClientForm from './ClientForm';
 import InvoicePreview from './InvoicePreview';
 import './NewBill.css';
@@ -123,7 +125,8 @@ class NewBill extends Component {
   renderActiveForm = () => {
     const { activeMenu } = this.state;
     const totalOrder = this.calculateTotal(); // Calcular el total
-    const currentDate = this.getCurrentDate();
+    
+
     switch (activeMenu) {
       case 'cliente':
         return (
@@ -132,16 +135,7 @@ class NewBill extends Component {
               data={this.state.clientData}
               onDataChange={this.handleClientDataChange}
             />
-            <InvoicePreview
-              clienteData={this.state.clientData}
-              productosData={this.state.productData}
-              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              onDecrement={this.decreaseQuantity}
-              onIncrement={this.increaseQuantity}
-              invoiceNumber="12345"
-              currentDate={currentDate}
-              totalOrder={totalOrder}
-            />
+      
           </>
         );
       case 'productos':
@@ -152,16 +146,7 @@ class NewBill extends Component {
               onDataChange={this.handleProductDataChange}
               onProductSelect={this.handleProductSelect}
             />
-            <InvoicePreview
-              clienteData={this.state.clientData}
-              productosData={this.state.productData}
-              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              onIncrement={this.increaseQuantity}
-              onDecrement={this.decreaseQuantity}
-              invoiceNumber="12345"
-              currentDate={currentDate}
-              totalOrder={totalOrder}
-            />
+            
           </>
         );
       case 'enviar':
@@ -175,16 +160,6 @@ class NewBill extends Component {
               totalOrder={totalOrder}
               
             />
-            <InvoicePreview
-              clienteData={this.state.clientData}
-              productosData={this.state.productData}
-              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              onIncrement={this.increaseQuantity}
-              onDecrement={this.decreaseQuantity}
-              invoiceNumber="12345"
-              currentDate={currentDate}
-              totalOrder={totalOrder}
-            />
           </>
         );
       default:
@@ -194,34 +169,58 @@ class NewBill extends Component {
 
   render() {
     const { activeMenu } = this.state;
-
+    const totalOrder = this.calculateTotal(); // Calcular el total
+    const currentDate = this.getCurrentDate();
     return (
-      <div className="newBillContainer">
-        <div className="menu">
-          <button
-            className={`newBillMenuItem ${activeMenu === 'cliente' ? 'active' : ''}`}
-            onClick={() => this.setActiveMenu('cliente')}
-          >
-            <FaUser className="newBillIcon" /> Datos Cliente
-          </button>
-          <button
-            className={`newBillMenuItem ${activeMenu === 'productos' ? 'active' : ''}`}
-            onClick={() => this.setActiveMenu('productos')}
-          >
-            <FaProductHunt className="newBillIcon" /> Productos
-          </button>
-          <button
-            className={`newBillMenuItem ${activeMenu === 'enviar' ? 'active' : ''}`}
-            onClick={() => this.setActiveMenu('enviar')}
-          >
-            <FaCashRegister className="newBillIcon" /> Enviar Orden
-          </button>
-        </div>
+      
+      <Row className="g-0">
+          <Col md="2" lg = "2" xs = "2" className="menuSide">
+            {/* Aquí utilizamos el componente Button de reactstrap */}
+            <Button
+              color="primary"
+              className={`newBillMenuItem ${activeMenu === 'cliente' ? 'active' : ''}`}
+              onClick={() => this.setActiveMenu('cliente')}
+            >
+              <FaUser className="newBillIcon" />
+            </Button>
+            <Button
+              color="secondary"
+              className={`newBillMenuItem ${activeMenu === 'productos' ? 'active' : ''}`}
+              onClick={() => this.setActiveMenu('productos')}
+            >
+              <FaProductHunt className="newBillIcon" />
+            </Button>
+            <Button
+              color="success"
+              className={`newBillMenuItem ${activeMenu === 'enviar' ? 'active' : ''}`}
+              onClick={() => this.setActiveMenu('enviar')}
+            >
+              <FaCashRegister className="newBillIcon" />
+            </Button>
+            {/* ... más botones si los tienes ... */}
+          </Col>
+          <Col md="6"  lg = "6" xs = "6"className="newBillMainContent">
+            <div>
+            {this.renderActiveForm()}
+            </div>
+            
+          </Col>
+          
+          <Col  className="invoicePreviewContainer">
 
-        <div className="newBillMainContent">
-          {this.renderActiveForm()}
-        </div>
-      </div>
+          <InvoicePreview
+              clienteData={this.state.clientData}
+              productosData={this.state.productData}
+              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
+              onIncrement={this.increaseQuantity}
+              onDecrement={this.decreaseQuantity}
+              invoiceNumber="12345"
+              currentDate={currentDate}
+              totalOrder={totalOrder}
+            />
+          </Col>
+        </Row>
+     
     );
   }
 }

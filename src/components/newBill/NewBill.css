@@ -1,64 +1,66 @@
-.newBillContainer {
+/* NewBill.css */
+
+ 
+/* Estilos generales para el sidebar */
+.menuSide {
+  margin-top: 20px; 
+  background-color: #1c1c1c; /* Color de fondo del sidebar */
+  border-radius: 25px; /* Bordes redondeados */
   display: flex;
-
-  min-height: 100vh;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos horizontalmente */
+  height: 90vh; /* Altura completa */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+  padding: 30px 10px; /* Ajuste del espaciado interno */
+  justify-content: flex-start; /* Alinea los elementos al inicio del contenedor */
+  width: 70px; /* Ancho más delgado para el sidebar */
 }
 
-.menu {
-  flex-basis: 20%;
-  background-color: #f0f0f0;
-  padding: 10px;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+body {
+  background-color: #121212; /* Color de fondo oscuro para todo el cuerpo */
+  /*background-color: #121212; *//* Color de fondo oscuro para todo el cuerpo */
+  color: #ffffff; /* Texto de color blanco para contraste */
 }
-
+/* Estilos para los botones */
 .newBillMenuItem {
+  background-color: transparent; /* Fondo transparente para los botones */
+  border: none; /* Sin bordes */
+  margin-bottom: 10px ; /* Espacio entre botones */
+  width: 50px; /* Ancho del botón */
+  height: 50px; /* Altura del botón */
+  border-radius: 40%; /* Bordes redondeados para hacerlos circulares */
   display: flex;
   align-items: center;
-  justify-content: center; /* Asegúrate de que el contenido está centrado */
-  background-color: #004aad;
-  color: white;
-  padding: 20px;
-  margin-bottom: 10px;
-  border: none;
-  text-align: center;
-  width: 100%;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1.2em;
-  height: auto; /* Establece una altura fija para todos los elementos del menú */
-  min-height: 80px;
-}
-
-
-.menuItem:hover {
-  background-color: #003b80;
+  justify-content: center;
 }
 
 .newBillIcon {
-  margin-right: 10px; /* Espacio entre el icono y el texto */
-  font-size: 1.5em; /* Ajusta el tamaño de los iconos */
+  color: white; /* Íconos de color blanco */
+  font-size: 1.5em; /* Tamaño del ícono */@media (min-width: 1200px) { /* Ajusta este valor según el breakpoint de `xl` en tu proyecto */
+    .invoicePreviewContainer {
+      /* Estilos específicos para pantallas grandes */
+    }
+  }
 }
 
-.orangeButton {
-  background-color: #ffa500; /* Color naranja para el botón */
+/* Estados activos e interacciones de los botones */
+.active {
+  background-color: #0056b3 !important; /* Fondo del botón activo */
+  transform: scale(1.1); /* Hace que el botón activo sea ligeramente más grande */
+
 }
 
-.orangeButton:hover {
-  background-color: #cc8400; /* Un naranja más oscuro para el hover */
-}
+/* Personalizaciones para el hover de botones */
+.newBillMenuItem:hover {
+  background-color: #003b80 !important; /* Fondo del botón al pasar el mouse */
 
-.content {
-  flex-grow: 0; /* Cambia flex-grow de 1 a 0 para evitar que se expanda y oculte otros elementos */
-  flex-basis: 80%; 
-  padding: 10px;
-  overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
 }
 
 
 
-.centered-element {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* O la altura deseada */
+
+.items-list {
+  max-height: calc(100vh -100px);
+  overflow-y: auto; /* Permite desplazamiento vertical si el contenido es demasiado largo */
 }
+

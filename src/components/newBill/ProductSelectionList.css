@@ -1,99 +1,99 @@
 /* ProductSelectionList.css */
-
 .product-selection-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-.stock-space {
-  margin-right: 8px; /* Ajusta el valor según el espacio que desees */
-}
-.product-name {
-  max-width: 300px;
-  font-size: 16px;
-  font-weight: bold;
+  background-color: #121212; /* Color de fondo oscuro */
+  padding-top: 20px; /* Espacio para la barra de búsqueda */
+  overflow-y: hidden; /* Ocultar el desplazamiento vertical */
+ padding-left: 30px;
 }
 
-.product-selection-header {
-  margin-bottom: 20px;
+.search-bar-container {
+  margin-bottom: 30px; /* Espacio debajo de la barra de búsqueda */
+  margin-right: 10%;
 }
 
-.product-selection-title {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
+.search-input {
+  display: block; /* Asegura que el Input se muestre como un bloque */
+  width: 98%; /* Ancho completo del contenedor */
+  border-radius: 20px; /* Bordes redondeados para el Input */
+  padding: 10px 20px; /* Padding interno para el Input */
+  font-size: 1rem; /* Tamaño de fuente para el Input */
+  color: #ffffff; /* Color de texto para el Input */
+  background-color: #2c2c2c; /* Color de fondo para el Input */
+  border: none; /* Sin borde para el Input */
 }
 
-.input-style {
-  flex-grow: 1;
-  padding: 8px;
-  border-radius: 4px 0px 0px;
-  border: 1px solid #ccc;
+/* Hacer que el placeholder del input de búsqueda sea más visible */
+.search-input::placeholder { /* Selector para el placeholder del input */
+  color: rgba(255, 255, 255, 0.75); /* Color blanco con opacidad para mayor visibilidad */
+  /* O puedes usar un color sólido si prefieres */
+  /* color: #ffffff; */
 }
 
+/* Asegúrate de incluir los estilos para los navegadores que utilizan prefijos */
+.search-input::-webkit-input-placeholder { color: rgba(255, 255, 255, 0.75); }
+.search-input:-ms-input-placeholder { color: rgba(255, 255, 255, 0.75); }
+.search-input::-ms-input-placeholder { color: rgba(255, 255, 255, 0.75); }
+.search-input::placeholder { color: rgba(255, 255, 255, 0.75); }
 .product-selection-list {
-  margin-bottom: 15px;
+  row-gap: 20px; /* Espacio vertical entre las tarjetas */
+  margin-right: 10%;
+}
+.product-cards-scrollable {
+  height: calc(98vh - 120px); /* Altura del viewport menos la altura de otros elementos como la barra de búsqueda */
+  overflow-y: auto; /* Activa el desplazamiento vertical dentro del contenedor */
+  -ms-overflow-style: none; /* Internet Explorer y Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.product-card {
+  border-radius: 20px; /* Esquinas redondeadas para las tarjetas */
+  background-color: #1c1c1c; /* Fondo de las tarjetas */
+  color: #ffffff; /* Texto blanco para las tarjetas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para las tarjetas */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Agrega background-color a la transición */
+}
+/* Oculta la barra de desplazamiento en Webkit & Blink browsers, como Safari, Chrome y Opera */
+.product-cards-scrollable::-webkit-scrollbar {
+  display: none;
+}
+.product-card:hover {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.product-name, .product-price {
+  /* ... tus otros estilos ... */
+  transition: color 0.3s ease; /* Asegúrate de agregar transición al color del texto también si es necesario */
 }
 
-th,
-td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
+.product-card:hover .product-name, 
+.product-card:hover .product-price {
+  color: #ffffff; /* Cambia el color del texto al pasar el mouse si lo necesitas */
 }
-
-th {
-  background-color: #f2f2f2;
+/* ...resto de los estilos... */
+.product-initial {
+  font-size: 3rem; /* Aumenta el tamaño de la fuente de la inicial del producto */
+  /* ...resto de tus estilos... */
 }
-
-.icon-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  margin-bottom: 9px;
-  cursor: pointer;
-  border-radius: 0px 4px;
+/* Spinner.css */
+.spinner-container {
   display: flex;
+  justify-content: center;
   align-items: center;
+  height: 300px; /* O el alto que desees para tu contenedor de spinner */
+  color: #0056b3; /* Color acorde al tema */
 }
 
-.icon-button:hover {
-  background-color: #0056b3;
+.spinner {
+  border: 5px solid #f3f3f3; /* Color claro para el borde del spinner */
+  border-top: 5px solid #0056b3; /* Color del borde superior del spinner */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
 }
 
-.selected-products {
-  margin-top: 20px;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-
-.selected-products h3 {
-  font-size: 20px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.selected-product {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  background-color: #f2f2f2;
-  border-radius: 4px;
-}
-
-.selected-product span {
-  flex-grow: 1;
-  margin-right: 10px;
-}
-
-/* Puedes conservar los estilos adicionales según tus necesidades */
