@@ -1,102 +1,133 @@
 /* ClientForm.css */
 
 .clientForm-container {
-  background-color: #f4f4f4;
+  background-color: #121212; /* Fondo oscuro para el contenedor */
+  color: #ffffff; /* Texto blanco para contraste */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra sutil para dar profundidad */
   text-align: center;
   width: 100%; /* Ajusta el ancho al 100% */
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.clientForm-section {
-  margin-bottom: 20px;
+  max-width: 400px; /* Máximo ancho del contenedor */
+  margin: 20px auto; /* Centrado con margen arriba y abajo */
 }
 
 .clientForm-section-title {
   font-size: 24px;
-  color: #004aad;
-  margin-bottom: 15px;
-}
-
-.clientForm-form-row {
-  display: flex;
-  justify-content: center;  /* Añade este estilo para centrar los botones */
-  margin-bottom: 15px;
-}
-
-.clientForm-label {
-  font-weight: bold;
-  color: #666;
-  margin-right: 10px;
-}
-
-.clientForm-input-group {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.clientForm-input-icon {
-  margin-right: 10px;
-  font-size: 24px;
+  font-weight: 600; /* Más visible y con jerarquía */
+  color: #0d6efd; /* Azul que cumple con las normas de accesibilidad */
+  margin-bottom: 1rem; /* Espacio consistente */
 }
 
 .clientForm-input,
-.clientForm-select {
-  flex-grow: 1;
-  padding: 8px;
-  border-radius: 4px 0 0 4px;
-  border: 1px solid #ccc;
+.clientForm-select,
+.clientForm-textarea {
+  background-color: #333; /* Fondo oscuro para los campos de entrada */
+  color: #fff; /* Texto gris claro para contraste */
+  border: none; /* Sin bordes externos */
+  border-bottom: 2px solid #555; /* Borde inferior más oscuro para resaltar */
+  padding: 10px;
+  border-radius: 4px; /* Bordes redondeados ligeramente */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
 
-.clientForm-textarea {
-  width: 100%;
-  height: 100px;
-  resize: vertical;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.clientForm-input:focus,
+.clientForm-select:focus,
+.clientForm-textarea:focus {
+  outline: none; /* Remueve el contorno predeterminado al enfocar */
+  border-bottom: 2px solid #007bff; /* Borde inferior azul al enfocar */
+  color: #3b3a3a; /* Texto blanco al enfocar para mayor contraste */
+}
+.clientForm-input:focus,
+.clientForm-select:focus,
+.clientForm-textarea:focus {
+  color: #ffffff; /* Texto blanco al enfocar para mayor contraste */
+  background-color: #1c1e21; /* Un fondo ligeramente más claro al enfocar */
+  transition: background-color 0.3s; /* Transición suave del fondo */
+  /* ... */
 }
 
 .clientForm-search-button {
-  background-color: #004aad;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  margin-bottom: 9px;
-  cursor: pointer;
-  border-radius: 0 4px 4px 0;
-  display: flex;
-  align-items: center;
-}
-
-.clientForm-search-icon {
-  font-size: 20px;
-  margin-right: 8px;
+  /* ... */
+  transition: background-color 0.3s, transform 0.3s; /* Animación al interactuar */
 }
 
 .clientForm-search-button:hover {
-  background-color: #003d8a;
+  transform: scale(1.05); /* Efecto de crecimiento al pasar el cursor */
+  /* ... */
+}
+.clientForm-input,
+.clientForm-select,
+.clientForm-textarea {
+  background-color: #333;
+  color: #adb5bd; /* Gris claro para texto placeholder */
+  /* ... */
+}
+.clientForm-input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* Espacio entre elementos del formulario */
+}
+
+.clientForm-input-icon {
+  color: #0d6efd; /* Iconos con el color del tema */
+  margin-right: 10px; /* Espacio entre el ícono y el input */
+  font-size: 1.5rem; /* Ajusta esto al tamaño que prefieras */
+}
+
+.clientForm-search-button {
+  background-color: #007bff; /* Botón de búsqueda con fondo azul */
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 5px; /* Espacio entre el input y el botón */
+  cursor: pointer;
+  border-radius: 4px; /* Bordes redondeados para el botón */
+}
+
+.clientForm-search-button:hover {
+  background-color: #0056b3; /* Oscurecer el botón al pasar el ratón */
 }
 
 .clientForm-error {
-  color: red;
-  margin-top: 5px;
+  color: #e83e8c; /* Color distintivo para mensajes de error */
+  margin-top: 10px; /* Espacio antes del mensaje de error */
 }
+
 .clientForm-product-button {
-  background-color: #004aad;
+  background-color: #007bff; /* Fondo para botones de productos */
   color: #fff;
   border: none;
-  padding: 10px 20px;
   margin: 0 5px;
+  padding: 10px 20px;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 20px; /* Bordes más redondeados para los botones */
 }
 
 .clientForm-product-button.selected {
-  background-color: orange;
+  background-color: #28a745; /* Color para el botón seleccionado */
+  font-weight: bold; /* Texto en negrita para el seleccionado */
+}
+
+.clientForm-input::placeholder,
+.clientForm-select::placeholder,
+.clientForm-textarea::placeholder {
+  color: #ffffff; /* Cambia el color del placeholder a blanco */
+  opacity: 1; /* Opcional: ajusta la opacidad del placeholder si es necesario */
+}
+
+/* Si deseas asegurarte de que los navegadores que usan prefijos también se vean afectados */
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ffffff;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #ffffff;
+  opacity: 1;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #ffffff;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #ffffff;
+  opacity: 1;
 }

@@ -1,103 +1,81 @@
 /* SendOrderForm.css */
 
 .sof-container {
-  background-color: #f4f4f4;
+  background-color: #121212; /* Fondo oscuro para el contenedor */
+  color: #ffffff; /* Texto blanco para contraste */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
   text-align: center;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  width: 100%; /* Ajusta el ancho al 100% */
+  max-width: 500px; /* Máximo ancho del contenedor */
+  margin: 20px auto; /* Centrado con margen arriba y abajo */
 }
 
 .sof-titulo {
   font-size: 24px;
-  margin-bottom: 20px;
-  color: #004aad;
-}
-
-.sof-total {
-  background-color: #f4f4f4;
-  color: #333;
-  padding: 10px;
-  border-radius: 5px;
+  color: #007bff; /* Azul brillante para los títulos */
   margin-bottom: 20px;
 }
 
-.sof-total p {
-  margin: 0;
-}
-
-.sof-total-amount {
-  font-size: 20px;
-  color: #004aad;
-}
-
-.sof-medio-pago {
-  margin-bottom: 20px;
+.sof-total,
+.sof-amounts {
+  background-color: #333; /* Fondo para las secciones de totales */
+  color: #fff; /* Texto blanco para contraste */
+  padding: 10px 15px;
+  border-radius: 5px; /* Bordes redondeados */
+  margin-bottom: 15px;
 }
 
 .sof-buttons {
   display: flex;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 .sof-button {
-  background-color: #004aad;
+  background-color: #007bff; /* Fondo para botones de productos */
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
   margin: 0 5px;
+  padding: 10px 20px;
   cursor: pointer;
-  font-size: 14px;
+  border-radius: 20px; /* Bordes más redondeados para los botones */
+  transition: background-color 0.3s; /* Transición suave de color */
 }
 
-
-.seleccionado {
-  background-color: orange;
+.sof-button:hover,
+.sof-button:focus {
+  background-color: #0056b3; /* Oscurecer el botón al interactuar */
 }
 
-.sof-form {
-  text-align: center;
-  margin-bottom: 20px;
+.sof-button.seleccionado {
+  background-color: #28a745; /* Color para el botón seleccionado */
+  font-weight: bold; /* Texto en negrita para el seleccionado */
 }
 
 .sof-input {
-  width: 80px;
-  font-size: 14px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: #004aad;
+  background-color: #262626; /* Fondo oscuro para inputs */
+  color: #fff; /* Texto blanco */
+  border: 1px solid #333; /* Borde sutil */
+  padding: 10px;
+  border-radius: 4px; /* Bordes redondeados */
+  width: calc(100% - 30px); /* Ajuste de ancho */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Transición suave */
 }
 
-.sof-amounts {
-  text-align: center;
+.sof-input:focus {
+  background-color: #121212; /* Fondo más oscuro cuando está en foco */
+  color: #007bff; /* Color del texto cuando está en foco */
+  border-color: #007bff; /* Color del borde cuando está en foco */
+  border-bottom: 2px solid #007bff; /* Borde inferior verde al enfocar */
 }
 
-.sof-amounts p {
-  margin: 5px 0;
-}
 
 .sof-total-amount,
 .sof-cambio-amount {
   font-size: 18px;
-  font-weight: bold;
-  color: #004aad;
+  font-weight: bold; /* Texto en negrita para los montos */
 }
 
-.sof-terminar-button {
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.sof-terminar-button:hover {
-  background-color: #1d822c;
-}
+/* Resto de tus estilos... */

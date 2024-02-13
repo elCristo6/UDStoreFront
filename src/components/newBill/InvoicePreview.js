@@ -225,11 +225,12 @@ function InvoicePreview(props) {
           <div className="empty-state">No hay productos en la factura.</div>
         )}
       </ListGroup>
+     
+      <Row className="finish-invoice-button">
       <Row className="justify-content-end total-section">
         <Col xs="auto" className="total-label">Total Factura:</Col>
         <Col xs="auto" className="total-amount">${totalOrder}</Col>
       </Row>
-      <Row className="finish-invoice-button">
         <Col className="text-center">
           <Button color="primary" onClick={handleFinishInvoice}>Finalizar Factura</Button>
         </Col>

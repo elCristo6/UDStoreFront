@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SendOrderForm.css'; // Importa el archivo CSS
+import { Button, Container, Row, Col, Input, FormGroup, Form, Label } from 'reactstrap';
 
 const SendOrderForm = (props) => {
   const {totalOrder}= props;
@@ -27,61 +28,65 @@ const SendOrderForm = (props) => {
   };
 
   return (
-    <div className="sof-container">
+    <Container className="sof-container">
       <h2 className="sof-titulo">Confirma tu Pedido</h2>
-      <form onSubmit={handleSubmit}>
-      <div className="sof-total">
-        <p>Su Total es de:</p>
-        <p className="sof-total-amount">${totalOrder}</p>
-      </div>
-      <div className="sof-medio-pago">
+      <Form onSubmit={handleSubmit}>
+      <Row >
+        <Col>
+          <p>Su Total es de:</p>
+          <p className="sof-total-amount">${totalOrder}</p>
+        </Col>
+      </Row>
+      <Row className="sof-medio-pago">
+        <Col>
         <p>Medio de Pago:</p>
+        </Col>
         <div className="sof-buttons">
-          <button
+          <Button
             className={`sof-button ${selectedButton === 1 ? 'seleccionado' : ''}`}
             onClick={() => handleButtonClick(1)}
           >
             Efectivo
-          </button>
-          <button
+          </Button>
+          <Button
             className={`sof-button ${selectedButton === 2 ? 'seleccionado' : ''}`}
             onClick={() => handleButtonClick(2)}
           >
             Nequi
-          </button>
-          <button
+          </Button>
+          <Button
             className={`sof-button ${selectedButton === 3 ? 'seleccionado' : ''}`}
             onClick={() => handleButtonClick(3)}
           >
             Daviplata
-          </button>
-          <button
+          </Button>
+          <Button
             className={`sof-button ${selectedButton === 4 ? 'seleccionado' : ''}`}
             onClick={() => handleButtonClick(4)}
           >
             Bancolombia
-          </button>
+          </Button>
         </div>
-      </div>
-      <form className="sof-form">
-        <fieldset>
-          <legend>Paga con:</legend>
-          <input
+      </Row>
+           <FormGroup>
+          <Label for="cantidadPaga">Paga con:</Label>
+          <Input
             type="text"
             id="cantidadPaga"
             value={cantidadPaga}
             onChange={handleCantidadPagaChange}
             className="sof-input"
           />
-        </fieldset>
-        <div className="sof-amounts">
-          <p>Total: <span className="sof-total-amount">${totalOrder}</span></p>
-          <p>Cambio: <span className="sof-cambio-amount">${cambio}</span></p>
-        </div>
-      </form>
-      <button className="sof-terminar-button">Terminar</button>
-      </form>
-    </div>
+        </FormGroup>
+        <Row className="sof-amounts">
+          <Col>
+            <p>Total: <span className="sof-total-amount">${totalOrder}</span></p>
+            <p>Cambio: <span className="sof-cambio-amount">${cambio}</span></p>
+          </Col>
+        </Row>
+     
+      </Form>
+    </Container>
   );
 };
 

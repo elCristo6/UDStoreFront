@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaEnvelope, FaIdCard, FaPhone, FaSearch, FaUser } from 'react-icons/fa';
 import { consultarPorTelefono } from '../../service/authService';
+import { Button, Row, Col, Form, FormGroup, Input, Container } from 'reactstrap';
+
 import './ClientForm.css';
 
 class ClientForm extends React.Component {
@@ -129,116 +131,134 @@ class ClientForm extends React.Component {
       });
     }
   };
-
   render() {
     return (
-      <div className="clientForm-container">
-        <div className="clientForm-section">
-          <div className="clientForm-section-title">1. Información General</div>
-
-          <div className="clientForm-form-row">
+      <Container className="clientForm-container">
+        <Form>
+          <Row className="mb-4">
+            <Col>
+              <h5 className="clientForm-section-title">1. Información General</h5>
+            </Col>
+          </Row>
+          
+          <Row form>
             {this.state.products.map((product) => (
-              <button
-                key={product.id}
-                className={`clientForm-product-button ${this.state.selectedProduct === product.id ? 'selected' : ''}`}
-                onClick={() => this.handleProductSelect(product.id)}
-              >
-                {product.name}
-              </button>
+              <Col md={6} key={product.id}>
+                <Button
+                  color={this.state.selectedProduct === product.id ? "primary" : "secondary"}
+                  onClick={() => this.handleProductSelect(product.id)}
+                  className="mb-3"
+                  block
+                >
+                  {product.name}
+                </Button>
+              </Col>
             ))}
-          </div>
+          </Row>
 
-          <div className="clientForm-form-row">
-            <label className="clientForm-label" htmlFor="phone-input"></label>
-            <div className="clientForm-input-group">
-              <FaPhone className="clientForm-input-icon" />
-              <input
-                className="clientForm-input"
-                type="tel"
-                id="phone-input"
-                name="phoneNumber"
-                value={this.state.phoneNumber}
-                onChange={this.handleInputChange}
-                onKeyUp={this.handlePhoneKeyUp} // Agregar el manejador de eventos
-                placeholder="Phone Number"
-                pattern="[0-9]*"
-              />
-              <button className="clientForm-search-button" onClick={this.handleSearchClick}>
-                <FaSearch className="clientForm-search-icon" />
-              </button>
-            </div>
-          </div>
+          <FormGroup>
+            <Row>
+              <Col xs="10">
+                <div className="clientForm-input-group">
+                  <FaPhone className="clientForm-input-icon" />
+                  <Input
+                    type="tel"
+                    name="phoneNumber"
+                    id="phone-input"
+                    className="clientForm-input" 
+                    value={this.state.phoneNumber}
+                    onChange={this.handleInputChange}
+                    onKeyUp={this.handlePhoneKeyUp}
+                    placeholder="Número de Teléfono"
+                  />
+                </div>
+              </Col>
+              <Col xs="2">
+                <Button className="clientForm-search-button" onClick={this.handleSearchClick}>
+                  <FaSearch />
+                </Button>
+              </Col>
+            </Row>
+          </FormGroup>
 
           {this.state.error && (
-            <div className="clientForm-error">
-              <p>{this.state.error}</p>
-            </div>
+            <Row>
+              <Col>
+                <div className="clientForm-error">{this.state.error}</div>
+              </Col>
+            </Row>
           )}
 
-          <div className="clientForm-form-row">
-            <label className="clientForm-label" htmlFor="name-input"></label>
-            <FaUser className="clientForm-input-icon" />
-            <input
-              className="clientForm-input"
-              type="text"
-              id="name-input"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleInputChange}
-              placeholder="Full Name"
-            />
-          </div>
-          <div className="clientForm-form-row">
-            <label className="clientForm-label" htmlFor="email-input"></label>
+          <FormGroup>
             <div className="clientForm-input-group">
-              <FaEnvelope className="clientForm-input-icon" />
-              <input
-                className="clientForm-input"
-                type="email"
-                id="email-input"
-                name="email"
-                value={this.state.email}
+              <FaUser className="clientForm-input-icon" />
+              <Input
+                type="text"
+                name="name"
+                id="name-input"
+                className="clientForm-input" 
+                value={this.state.name}
                 onChange={this.handleInputChange}
-                placeholder="example@domain.com"
+                placeholder="Nombre Completo"
               />
             </div>
-          </div>
-          
-          <div className="clientForm-form-row">
-            <label className="clientForm-label" htmlFor="nit-cedula-input"></label>
-            <FaIdCard className="clientForm-input-icon" />
-            <input
-              className="clientForm-input"
-              type="text"
-              id="nit-cedula-input"
-              name="nitCedula"
-              value={this.state.nitCedula}
-              onChange={this.handleInputChange}
-              placeholder="NIT or Cédula"
-              pattern="[0-9]*"
-            />
-          </div>
-        </div>
-        <div className="clientForm-section">
-          <div className="clientForm-section-title">2. Detalles del Cliente</div>
-          <div className="clientForm-form-row">
-            <textarea
-              className="clientForm-textarea"
-              id="client-description"
-              name="clientDescription"
-              value={this.state.clientDescription}
-              onChange={this.handleInputChange}
-              placeholder="Ingrese una descripción o alguna nota del cliente"
-            />
-          </div>
-        </div>
+          </FormGroup>
 
-        {this.state.isLoading && (
-          <div className="clientForm-loading">
-            <p>Cargando...</p>
-          </div>
-        )}
-      </div>
+          <FormGroup>
+            <div className="clientForm-input-group">
+              <FaEnvelope className="clientForm-input-icon" />
+              <Input
+                type="email"
+                name="email"
+                id="email-input"
+                className="clientForm-input" 
+                value={this.state.email}
+                onChange={this.handleInputChange}
+                placeholder="Correo Electrónico"
+              />
+            </div>
+          </FormGroup>
+
+          <FormGroup>
+            <div className="clientForm-input-group">
+              <FaIdCard className="clientForm-input-icon" />
+              <Input
+                type="text"
+                name="nitCedula"
+                id="nit-cedula-input"
+                className="clientForm-input" 
+                value={this.state.nitCedula}
+                onChange={this.handleInputChange}
+                placeholder="NIT/Cédula"
+              />
+            </div>
+          </FormGroup>
+          <FormGroup>
+          <Row>
+            <Col>
+              <h5 className="clientForm-section-title">2. Detalles del Cliente</h5>
+              <Input
+                type="textarea"
+                name="clientDescription"
+                id="client-description"
+                className="clientForm-input" 
+                value={this.state.clientDescription}
+                onChange={this.handleInputChange}
+                placeholder="Descripción del cliente"
+                rows="3"
+              />
+            </Col>
+          </Row>
+          </FormGroup>
+          {this.state.isLoading && (
+            <Row> 
+              <Col className="text-center">
+                <div className="clientForm-loading">Cargando...</div>
+              </Col>
+            </Row>
+          )}
+        </Form>
+      </Container>
     );
   }
 }
