@@ -21,3 +21,29 @@ export const addBill = async (billData) => {
     throw error;
   }
 };
+
+
+// Función para obtener todas las facturas
+export const getBills = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/newBill`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Asegúrate de incluir cualquier otro encabezado necesario, como tokens de autenticación.
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Error fetching bills');
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching bills:', error);
+    throw error;
+  }
+};
+
+

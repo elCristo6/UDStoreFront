@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEnvelope, FaIdCard, FaPhone, FaSearch, FaUser } from 'react-icons/fa';
+import { Button, Col, Container, Form, FormGroup, Input, Row } from 'reactstrap';
 import { consultarPorTelefono } from '../../service/authService';
-import { Button, Row, Col, Form, FormGroup, Input, Container } from 'reactstrap';
 
 import './ClientForm.css';
 
@@ -64,6 +64,7 @@ class ClientForm extends React.Component {
             name: result.name || '',
             email: result.email || '',
             nitCedula: result.cc || '',
+            detalles:result.detalles||''
             // Agrega más campos según los datos que recibas
           }, () => {
             // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
@@ -75,6 +76,7 @@ class ClientForm extends React.Component {
             name: '',
             email: '',
             nitCedula: '',
+            clientDescription:'',
             error: 'El usuario no existe.', // Mensaje de error
             // Limpia otros campos según sea necesario
           }, () => {
@@ -88,6 +90,7 @@ class ClientForm extends React.Component {
           name: selectedProduct,
           email: '',
           nitCedula: '',
+          clientDescription:''
         }, () => {
           // Después de establecer el estado, llama a la función para actualizar los datos en InvoicePreview
           this.props.onDataChange(this.state);
@@ -239,10 +242,10 @@ class ClientForm extends React.Component {
               <h5 className="clientForm-section-title">2. Detalles del Cliente</h5>
               <Input
                 type="textarea"
-                name="clientDescription"
+                name="detalles"
                 id="client-description"
                 className="clientForm-input" 
-                value={this.state.clientDescription}
+                value={this.state.detalles}
                 onChange={this.handleInputChange}
                 placeholder="Descripción del cliente"
                 rows="3"

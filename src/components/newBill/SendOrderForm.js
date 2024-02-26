@@ -1,90 +1,70 @@
 import React, { useState } from 'react';
+import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import './SendOrderForm.css'; // Importa el archivo CSS
-import { Button, Container, Row, Col, Input, FormGroup, Form, Label } from 'reactstrap';
 
-const SendOrderForm = (props) => {
-  const {totalOrder}= props;
-  const [selectedButton, setSelectedButton] = useState(1);
-  const [cantidadPaga, setCantidadPaga] = useState('50000'); // Valor inventado
-  const [cambio, setCambio] = useState('0'); // Valor inicial de cambio
+const SendOrderForm = ({ totalOrder, onPaymentMethodChange }) => {
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Efectivo');
+  const [cantidadPaga, setCantidadPaga] = useState('');
+  const [cambio, setCambio] = useState('');
 
-  const handleButtonClick = (buttonNumber) => {
-    setSelectedButton(buttonNumber);
+  const handlePaymentMethodClick = (method) => {
+    setSelectedPaymentMethod(method);
+    // Envía el método de pago seleccionado al componente padre si es necesario
+    if(onPaymentMethodChange) {
+      onPaymentMethodChange(method);
+    }
   };
 
   const handleCantidadPagaChange = (event) => {
-    const nuevaCantidadPaga = event.target.value;
-    setCantidadPaga(nuevaCantidadPaga);
+    const amount = event.target.value;
+    setCantidadPaga(amount);
+    const calculatedChange = parseFloat(amount) - totalOrder;
+    const finalChange = calculatedChange > 0 ? calculatedChange.toString() : '0';
+    setCambio(finalChange);
 
-    // Calcular el cambio (valor de ejemplo)
-    
-    const cambioCalculado = nuevaCantidadPaga - totalOrder;
-    setCambio(cambioCalculado.toString()); // Convertir a cadena
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+    // Aquí actualizamos el estado en NewBill
+    onPaymentMethodChange(selectedPaymentMethod, amount, finalChange);
   };
 
   return (
     <Container className="sof-container">
       <h2 className="sof-titulo">Confirma tu Pedido</h2>
-      <Form onSubmit={handleSubmit}>
-      <Row >
-        <Col>
-          <p>Su Total es de:</p>
-          <p className="sof-total-amount">${totalOrder}</p>
-        </Col>
-      </Row>
-      <Row className="sof-medio-pago">
-        <Col>
-        <p>Medio de Pago:</p>
-        </Col>
-        <div className="sof-buttons">
-          <Button
-            className={`sof-button ${selectedButton === 1 ? 'seleccionado' : ''}`}
-            onClick={() => handleButtonClick(1)}
-          >
-            Efectivo
-          </Button>
-          <Button
-            className={`sof-button ${selectedButton === 2 ? 'seleccionado' : ''}`}
-            onClick={() => handleButtonClick(2)}
-          >
-            Nequi
-          </Button>
-          <Button
-            className={`sof-button ${selectedButton === 3 ? 'seleccionado' : ''}`}
-            onClick={() => handleButtonClick(3)}
-          >
-            Daviplata
-          </Button>
-          <Button
-            className={`sof-button ${selectedButton === 4 ? 'seleccionado' : ''}`}
-            onClick={() => handleButtonClick(4)}
-          >
-            Bancolombia
-          </Button>
-        </div>
-      </Row>
-           <FormGroup>
+      <Form>
+        <Row>
+          <Col>
+            <p>Su Total es de: ${totalOrder.toString()}</p>
+          </Col>
+        </Row>
+        <Row className="sof-medio-pago">
+          <Col>
+            <p>Medio de Pago:</p>
+            {['Efectivo', 'Nequi', 'Daviplata', 'Bancolombia'].map((method, index) => (
+              <Button
+                key={index}
+                className={`sof-button ${selectedPaymentMethod === method ? 'seleccionado' : ''}`}
+                onClick={() => handlePaymentMethodClick(method)}
+              >
+                {method}
+              </Button>
+            ))}
+          </Col>
+        </Row>
+        <FormGroup>
           <Label for="cantidadPaga">Paga con:</Label>
           <Input
-            type="text"
+            type="number"
             id="cantidadPaga"
             value={cantidadPaga}
             onChange={handleCantidadPagaChange}
             className="sof-input"
+            placeholder="Ingrese la cantidad pagada"
           />
         </FormGroup>
-        <Row className="sof-amounts">
+        <Row>
           <Col>
-            <p>Total: <span className="sof-total-amount">${totalOrder}</span></p>
             <p>Cambio: <span className="sof-cambio-amount">${cambio}</span></p>
           </Col>
         </Row>
-     
       </Form>
     </Container>
   );

@@ -45,8 +45,12 @@
 .items-list {
   overflow-y: auto;
   margin-bottom: 1rem;
+  -ms-overflow-style: none; /* Oculta la barra de desplazamiento para IE y Edge */
 }
-
+/* Oculta la barra de desplazamiento en Webkit & Blink browsers, como Safari, Chrome y Opera */
+.items-list::-webkit-scrollbar {
+  display: none;
+}
 .item {
   background-color: #1c1c1c;
   border: 1px solid #333;
@@ -133,4 +137,19 @@
   .quantity, .delete-button {
     justify-content: flex-start;
   }
+}.confirmation-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: green;
+  /* Añade tu animación aquí */
+  animation: confirmAnimation 2s ease forwards;
+}
+
+@keyframes confirmAnimation {
+  0% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.5) translate(-50%, -50%); }
 }
