@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import { FaCashRegister, FaProductHunt, FaUser } from 'react-icons/fa';
-import { Button, Col, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { getBills } from '../../service/newBillService';
+import Sidebar from '../sideBar/sideBar';
 import ClientForm from './ClientForm';
 import InvoicePreview from './InvoicePreview';
 import './NewBill.css';
@@ -29,6 +29,8 @@ class NewBill extends Component {
         change: 0,
       },
       productData: [],
+      impresionesData: [],
+      serviciosData: [],
       orderData: {},
       lastInvoiceConsecutive: 0,
      
@@ -102,8 +104,28 @@ fetchLastInvoiceConsecutive = async () => {
 
 
   calculateTotal = () => {
-    const { productData } = this.state;
-    return productData.reduce((total, product) => total + (product.price * product.quantity), 0);
+    const { productData ,impresionesData ,serviciosData} = this.state;
+    const productsTotal = productData.reduce((total, product) => total + (product.price * product.quantity), 0);
+    const impresionesTotal = impresionesData.reduce((total, impresion) => total + impresion.total, 0);
+    const serviciosTotal = serviciosData.reduce((total, servicio) => total + servicio.valor, 0);
+    return productsTotal + impresionesTotal + serviciosTotal;
+  };
+  
+  handleRemoveImpresion = (impresionId) => {
+    this.setState(prevState => ({
+      impresionesData: prevState.impresionesData.filter(impresion => impresion.id !== impresionId)
+    }));
+  };
+  handleServicioSubmit = (servicioData) => {
+    this.setState(prevState => ({
+      serviciosData: [...prevState.serviciosData, { ...servicioData, id: Date.now() }]
+    }));
+  };
+
+  handleRemoveServicio = (servicioId) => {
+    this.setState(prevState => ({
+      serviciosData: prevState.serviciosData.filter(servicio => servicio.id !== servicioId)
+    }));
   };
   
   handleRemoveProduct = (productId) => {
@@ -204,6 +226,8 @@ fetchLastInvoiceConsecutive = async () => {
               data={this.state.productData}
               onDataChange={this.handleProductDataChange}
               onProductSelect={this.handleProductSelect}
+              onImpresionSubmit={this.handleImpresionSubmit}
+              onServicioSubmit={this.handleServicioSubmit}
             />
             
           </>
@@ -224,7 +248,13 @@ fetchLastInvoiceConsecutive = async () => {
         return null;
     }
   };
-
+  handleImpresionSubmit = (impresionData) => {
+    // Manejo de datos de impresión
+    this.setState(prevState => ({
+      impresionesData: [...prevState.impresionesData, { ...impresionData, id: Date.now() }] // Agregar a impresionesData
+    }));
+  };
+  
   render() {
     const { activeMenu } = this.state;
     const totalOrder = this.calculateTotal(); // Calcular el total
@@ -233,31 +263,7 @@ fetchLastInvoiceConsecutive = async () => {
     return (
       
       <Row className="g-0">
-          <Col md="2" lg = "2" xs = "2" className="menuSide">
-            {/* Aquí utilizamos el componente Button de reactstrap */}
-            <Button
-              color="primary"
-              className={`newBillMenuItem ${activeMenu === 'cliente' ? 'active' : ''}`}
-              onClick={() => this.setActiveMenu('cliente')}
-            >
-              <FaUser className="newBillIcon" />
-            </Button>
-            <Button
-              color="secondary"
-              className={`newBillMenuItem ${activeMenu === 'productos' ? 'active' : ''}`}
-              onClick={() => this.setActiveMenu('productos')}
-            >
-              <FaProductHunt className="newBillIcon" />
-            </Button>
-            <Button
-              color="success"
-              className={`newBillMenuItem ${activeMenu === 'enviar' ? 'active' : ''}`}
-              onClick={() => this.setActiveMenu('enviar')}
-            >
-              <FaCashRegister className="newBillIcon" />
-            </Button>
-            {/* ... más botones si los tienes ... */}
-          </Col>
+          <Sidebar activeMenu={activeMenu} setActiveMenu={this.setActiveMenu} />
           <Col md="6"  lg = "6" xs = "6"className="newBillMainContent">
             <div>
             {this.renderActiveForm()}
@@ -279,6 +285,10 @@ fetchLastInvoiceConsecutive = async () => {
               resetState={this.resetState}
               paymentDetails={this.state.paymentDetails}
               fetchLastInvoiceConsecutive={this.fetchLastInvoiceConsecutive}
+              impresionesData={this.state.impresionesData}
+              onRemoveImpresion={this.handleRemoveImpresion}
+              serviciosData={this.state.serviciosData}
+              onRemoveServicio={this.handleRemoveServicio}
             />
           </Col>
         </Row>

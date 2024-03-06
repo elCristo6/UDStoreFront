@@ -1,0 +1,58 @@
+/* impresionesModal.css */
+.imp-modal-header {
+  background-color: #2a2a2a; /* Color de fondo oscuro */
+  color: #fff; /* Color de texto claro */
+  border-bottom: 1px solid #444; /* Borde inferior sutil */
+}
+
+.imp-modal-body {
+  background-color: #1a1a1a; /* Fondo más oscuro para el cuerpo del modal */
+  color: #ddd; /* Color de texto más claro */
+}
+
+.imp-modal-footer {
+  background-color: #2a2a2a; /* Color de fondo oscuro para el pie del modal */
+  border-top: 1px solid #444; /* Borde superior sutil */
+}
+
+.imp-modal-input {
+  background-color: #333; /* Fondo oscuro para los inputs */
+  color: #fff; /* Texto blanco para los inputs */
+  border: 1px solid #555; /* Borde para los inputs */
+}
+
+.imp-modal-textarea {
+  background-color: #333; /* Fondo oscuro para las textareas */
+  color: #fff; /* Texto blanco para las textareas */
+  border: 1px solid #555; /* Borde para las textareas */
+}
+
+.imp-modal-disabled-input {
+  background-color: #555; /* Fondo más oscuro para inputs deshabilitados */
+  color: #777; /* Color de texto para inputs deshabilitados */
+  border: 1px solid #666; /* Borde para inputs deshabilitados */
+}
+
+.imp-modal-button-primary {
+  background-color: #007bff; /* Color de fondo para el botón primario */
+  border: none; /* Sin borde */
+}
+
+.imp-modal-button-secondary {
+  background-color: #6c757d; /* Color de fondo para el botón secundario */
+  border: none; /* Sin borde */
+}
+
+.imp-modal-label {
+color: #fff; 
+}
+
+.imp-modal-close-button {
+color: #fff; 
+opacity: 0.7;
+}
+
+.imp-modal-close-button:hover {
+opacity: 1; /* Hacerlo más prominente al pasar el ratón */
+}
+

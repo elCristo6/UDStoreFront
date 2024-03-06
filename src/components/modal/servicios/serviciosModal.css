@@ -1,0 +1,55 @@
+/* serviciosModal.css */
+.svc-modal-header {
+  background-color: #2a2a2a; /* Color de fondo oscuro */
+  color: #fff; /* Color de texto claro */
+  border-bottom: 1px solid #444; /* Borde inferior sutil */
+}
+
+.svc-modal-body {
+  background-color: #1a1a1a; /* Fondo más oscuro para el cuerpo del modal */
+  color: #ddd; /* Color de texto más claro */
+}
+
+.svc-modal-footer {
+  background-color: #2a2a2a; /* Color de fondo oscuro para el pie del modal */
+  border-top: 1px solid #444; /* Borde superior sutil */
+}
+
+.svc-modal-input {
+  background-color: #333; /* Fondo oscuro para los inputs */
+  color: #fff; /* Texto blanco para los inputs */
+  border: 1px solid #555; /* Borde para los inputs */
+}
+
+.svc-modal-textarea {
+  background-color: #333; /* Fondo oscuro para las textareas */
+  color: #fff; /* Texto blanco para las textareas */
+  border: 1px solid #555; /* Borde para las textareas */
+}
+
+.svc-modal-button-primary {
+  background-color: #007bff; /* Color de fondo para el botón primario */
+  border: none; /* Sin borde */
+}
+
+.svc-modal-button-secondary {
+  background-color: #6c757d; /* Color de fondo para el botón secundario */
+  border: none; /* Sin borde */
+}
+
+/* Para los títulos y etiquetas dentro del modal */
+.svc-modal-label {
+  color: #fff; /* Color de texto claro para etiquetas */
+}
+
+/* Estilos adicionales para el botón que cierra el modal */
+.svc-modal-close-button {
+  color: #fff; /* Color de texto claro */
+  opacity: 0.7; /* Hacerlo menos prominente */
+}
+
+.svc-modal-close-button:hover {
+  opacity: 1; /* Hacerlo más prominente al pasar el ratón */
+}
+
+/* Asegúrate de aplicar estas clases correctamente en tu componente React. */

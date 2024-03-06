@@ -1,54 +1,41 @@
+//sideBar.js
 import React from 'react';
-import {
-  FaBox,
-  FaChartPie,
-  FaClipboardList,
-  FaCog,
-  FaTachometerAlt,
-  FaUsers
-} from 'react-icons/fa';
-import './sideBar.css';
+import { FaCashRegister, FaProductHunt, FaTools, FaUser } from 'react-icons/fa';
+import { Button, Col } from 'reactstrap';
 
-const Sidebar = ({ expandedMenu, setExpandedMenu }) => {
-  
-  const toggleMenu = (menuName) => {
-      setExpandedMenu(menuName);
-  };
-
+function Sidebar({ activeMenu, setActiveMenu }) {
   return (
-    <div className="top-sidebar">
-      <div className="top-sidebar-menu">
-        <div className="menu-item" onClick={() => toggleMenu('dashboard')}>
-          <FaTachometerAlt />
-          Dashboard
-        </div>
-        <div className="menu-item" onClick={() => toggleMenu('clientes')}>
-          <FaUsers />
-          Clientes
-        </div>
-        <div className="menu-item" onClick={() => toggleMenu('productos')}>
-          <FaBox />
-          Productos
-        </div>
-        <div className="menu-item" onClick={() => toggleMenu('inventario')}>
-          <FaClipboardList />
-          Inventario
-        </div>
-        <div className="menu-item" onClick={() => toggleMenu('controlDiario')}>
-          <FaClipboardList />
-          Control diario
-        </div>
-        <div className="menu-item" onClick={() => toggleMenu('nuevaFactura')}>
-          <FaChartPie />
-          Nueva factura
-        </div>
-        <div className="menu-item" onClick={() => toggleMenu('configuracion')}>
-          <FaCog />
-          Configuracion
-        </div>
-      </div>
-    </div>
+    <Col md="2" lg="2" xs="2" className="menuSide">
+      <Button
+        color="primary"
+        className={`newBillMenuItem ${activeMenu === 'cliente' ? 'active' : ''}`}
+        onClick={() => setActiveMenu('cliente')}
+      >
+        <FaUser className="newBillIcon" />
+      </Button>
+      <Button
+              color="secondary"
+              className={`newBillMenuItem ${activeMenu === 'productos' ? 'active' : ''}`}
+              onClick={() => setActiveMenu('productos')}
+            >
+              <FaProductHunt className="newBillIcon" />
+            </Button>
+      <Button
+              color="success"
+              className={`newBillMenuItem ${activeMenu === 'enviar' ? 'active' : ''}`}
+              onClick={() => setActiveMenu('enviar')}
+            >
+              <FaCashRegister className="newBillIcon" />
+      </Button> 
+      <Button
+        color="warning"
+        className={`newBillMenuItem ${activeMenu === 'servicios' ? 'active' : ''}`}
+        onClick={() => setActiveMenu('servicios')}
+      >
+        <FaTools className="newBillIcon" />
+      </Button>
+    </Col>
   );
-};
+}
 
 export default Sidebar;

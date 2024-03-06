@@ -131,7 +131,8 @@
   }
 
   .item-name, .item-price, .item-total {
-    display: block;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .quantity, .delete-button {
@@ -147,7 +148,9 @@
   /* Añade tu animación aquí */
   animation: confirmAnimation 2s ease forwards;
 }
-
+.product-info, .quantity {
+  flex: 1 0 auto; /* Añadir algún espacio alrededor del contenido */
+}
 @keyframes confirmAnimation {
   0% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
   50% { opacity: 1; }
