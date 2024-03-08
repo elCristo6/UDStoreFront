@@ -1,13 +1,22 @@
+
+
+/* Asegúrate de que el Container de Reactstrap no tenga padding extra que cause el desbordamiento */
+.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+  /* ...otros estilos si son necesarios... */
+}
 .invoice-preview {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:flex-start;
   height: 100vh;
   background-color: #121212;
   color: #ffffff;
-  padding: 1rem;
+  padding: 0rem;
   border-radius: 0.5rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  overflow-x: hidden;
 }
 
 .client-details {
@@ -37,9 +46,9 @@
 .invoice-date {
   background: #333;
   color: #fff;
-  padding: 0.25rem;
+  padding: 0.7rem;
   border-radius: 0.25rem;
-  text-align: right;
+  text-align: left;
 }
 
 .items-list {
@@ -148,6 +157,7 @@
   /* Añade tu animación aquí */
   animation: confirmAnimation 2s ease forwards;
 }
+
 .product-info, .quantity {
   flex: 1 0 auto; /* Añadir algún espacio alrededor del contenido */
 }
@@ -155,4 +165,67 @@
   0% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
   50% { opacity: 1; }
   100% { opacity: 0; transform: scale(1.5) translate(-50%, -50%); }
+}
+/* Estilos para la sección de ajustes y detalles de la factura */
+.adjustments-and-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #333; /* Tema oscuro */
+}
+
+.adjustment-buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.adjustment-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.adjust-button {
+  flex: 1; /* Ocupan todo el espacio disponible equitativamente */
+  margin: 0 10px; /* Espaciado entre botones */
+  /* Resto de estilos */
+}
+
+.payment-details {
+  display: flex;
+  flex-direction: column;
+  color: #00afff; /* Texto azul acorde al tema */
+  justify-content: center;
+  flex: 1; /* Ocupa la mitad del espacio disponible */
+  
+
+}
+
+.finalize-invoice-button {
+  
+  width: 100%; /* Hace que el botón se ajuste al ancho del contenedor */
+  box-sizing: border-box; /* Asegura que el padding y border estén incluidos en el ancho */
+  
+  /* ...otros estilos... */
+}
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Esto hace que el wrapper crezca y tome todo el espacio disponible */
+  overflow: hidden; /* Agregar scroll a la lista de productos si se desborda */
+}
+.element-background {
+  background-color: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+/* Estilo para el footer para mantenerlo abajo */
+.footer {
+  margin-top: auto; /* Esto empujará el footer hacia abajo */
+  overflow: hidden;
+}
+.item, .adjustment-buttons, .payment-details {
+  max-width: 100%; /* Evita que estos elementos se extiendan más allá de su contenedor */
 }

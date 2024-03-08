@@ -1,8 +1,8 @@
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import { Button, Col, Container, ListGroup, Row } from 'reactstrap';
 import { addBill } from '../../service/newBillService';
+
 import './InvoicePreview.css';
 
 // Componente ProductItem que representa un elemento de producto en la factura
@@ -80,17 +80,31 @@ function ServicioItem({ servicio, onRemoveServicio }) {
 // Componente InvoicePreview que muestra la factura completa
 function InvoicePreview({ clienteData, productosData, impresionesData,serviciosData,onRemoveServicio,onRemoveProduct, onIncrement, onDecrement,onRemoveImpresion, invoiceNumber, totalOrder, currentDate,resetState,paymentDetails ,fetchLastInvoiceConsecutive}) {
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [adjustedTotal, setAdjustedTotal] = useState(totalOrder);
+  const [adjustedChange, setAdjustedChange] = useState(paymentDetails.change);
 
+  // Actualizar adjustedTotal cuando totalOrder cambie
+  useEffect(() => {
+    setAdjustedTotal(totalOrder);
+    setAdjustedChange(paymentDetails.amountPaid - totalOrder);// También restablece el cambio cada vez que totalOrder cambie
+  }, [totalOrder, paymentDetails.amountPaid]); // Escuchar cambios en totalOrder
+  
+  const handleAdjustTotal = (adjustValue) => {
+    setAdjustedTotal((prevTotal) => {
+      const newTotal = Math.max(0, prevTotal + adjustValue);
+      // Calcular y establecer el nuevo cambio basado en el nuevo total ajustado
+      setAdjustedChange(paymentDetails.amountPaid - newTotal);
+      return newTotal;
+    });
+  };
   const handleFinishInvoice = async () => {
-
     const formattedProducts = productosData.map((item) => ({
       productId: item._id,
       quantity: item.quantity
     }));
 
     // Formateando impresiones, asumiendo que ya vienen preparadas en impresionesData
-    const formattedImpresiones = impresionesData.map(impresion => ({
-      // Estructura según lo necesario para tu backend
+    const formattedImpresiones = impresionesData.map(impresion => ({// Estructura según lo necesario para tu backend
       descripcionImpresion: impresion.descripcionImpresion,
       pesoImpresion: impresion.pesoGramos,
       valorGramo: impresion.valorGramo,
@@ -121,6 +135,12 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
     try {
       const response = await addBill(invoiceData);
       if (response) {
+       /* const printResponse = await registerPrint();
+        if (printResponse.success === false) {
+          console.log('La impresión falló, pero la factura se procesó correctamente:', printResponse.message);
+        } else {
+          console.log('Respuesta de la impresión:', printResponse);
+        }*/
         setShowConfirmation(true);
         setTimeout(() => {
           alert('Factura enviada exitosamente.');
@@ -138,6 +158,7 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
 
   return (
     <Container fluid className="invoice-preview">
+      <div className="content-wrapper">
         {showConfirmation && (
         <div className="confirmation-animation">✔</div> // Reemplaza esto con tu animación CSS
       )}
@@ -147,7 +168,7 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
         </Col>
       </Row>
       <Row>
-        <Col className="invoice-date text-right">Fecha: {currentDate}</Col>
+        <Col className="invoice-date text-left">Fecha: {currentDate}</Col>
       </Row>
       <Row className="client-details">
         <Col xs={12}>
@@ -158,63 +179,74 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
         </Col>
       </Row>
       <ListGroup flush className="items-list">
-  {/* Combinar productos e impresiones en una sola lista para la renderización */}
-  {productosData.length > 0 || impresionesData.length > 0  || serviciosData.length > 0 ?(
-    <>
-      {productosData.map((item) => (
-        <ProductItem
-          key={item._id}
-          product={item}
-          onRemoveProduct={onRemoveProduct}
-          onIncrement={onIncrement}
-          onDecrement={onDecrement}
-        />
+        {/* Combinar productos e impresiones en una sola lista para la renderización */}
+        {productosData.length > 0 || impresionesData.length > 0  || serviciosData.length > 0 ?(
+          <>
+            {productosData.map((item) => (
+              <ProductItem
+                key={item._id}
+                product={item}
+                onRemoveProduct={onRemoveProduct}
+                onIncrement={onIncrement}
+                onDecrement={onDecrement}
+              />
+            ))}
+            {impresionesData.map((impresion, index) => (
+              <ImpresionItem
+                key={`impresion-${index}`}
+                impresion={impresion}
+                onRemoveImpresion={onRemoveImpresion}
+              />
+            ))}
+            {serviciosData.map((servicio, index) => (
+              <ServicioItem
+                key={`servicio-${index}`}
+                servicio={servicio}
+                onRemoveServicio={onRemoveServicio}
+              />
       ))}
-      {impresionesData.map((impresion, index) => (
-        <ImpresionItem
-          key={`impresion-${index}`}
-          impresion={impresion}
-          onRemoveImpresion={onRemoveImpresion}
-        />
+
+          </>
+        ) : (
+          <div className="empty-state">No hay productos, impresiones ni servicios en la factura.</div>                                                     
+        )}
+      </ListGroup>
+
+</div>
+<div className="footer">
+<div className="element-background adjustments-and-summary">
+  <div className="adjustment-buttons-container">
+    <div className="adjustment-buttons">
+      {/* Botones de ajuste de la factura */}
+      {[1000, 2000, 5000].map((value, index) => (
+        <Button key={index} className={`adjust-button ${value < 0 ? 'negative' : ''}`} onClick={() => handleAdjustTotal(value)}>
+          {value >= 0 ? `+${value}` : value}
+        </Button>
       ))}
-      {serviciosData.map((servicio, index) => (
-  <ServicioItem
-    key={`servicio-${index}`}
-    servicio={servicio}
-    onRemoveServicio={onRemoveServicio}
-  />
-))}
-
-    </>
-  ) : (
-    <div className="empty-state">No hay productos, impresiones ni servicios en la factura.</div>                                                     
-  )}
-</ListGroup>
-
-      <Row className="finish-invoice-button">
-
-      <Row className="justify-content-end total-section">
-        <Col xs="auto" className="total-label">Medio de pago:</Col>
-        <Col xs="auto" className="total-amount">{paymentDetails.paymentMethod}</Col>
-      </Row>
-      <Row className="justify-content-end total-section">
-        <Col xs="auto" className="total-label">Paga con:</Col>
-        <Col xs="auto" className="total-amount">${paymentDetails.amountPaid}</Col>
-      </Row>
-      <Row className="justify-content-end total-section">
-        <Col xs="auto" className="total-label">Total Factura:</Col>
-        <Col xs="auto" className="total-amount">${totalOrder}</Col>
-      </Row>
-      <Row className="justify-content-end total-section">
-        <Col xs="auto" className="total-label">Cambio:</Col>
-        <Col xs="auto" className="total-amount">${paymentDetails.change}</Col>
-      </Row>
-        <Col className="text-center">
-          <Button color="primary" onClick={handleFinishInvoice}>Finalizar Factura</Button>
-        </Col>
-      </Row>
-    </Container>
+    </div>
+    <div className="adjustment-buttons">
+      {/* Botones de ajuste negativo */}
+      {[-1000, -2000, -5000].map((value, index) => (
+        <Button key={index} className={`adjust-button negative`} onClick={() => handleAdjustTotal(value)}>
+          {value}
+        </Button>
+      ))}
+    </div>
+  </div>
+  <div className="payment-details">
+    {/* Detalles del pago */}
+    <span>Medio de pago: {paymentDetails.paymentMethod}</span>
+    <span>Paga con: ${paymentDetails.amountPaid}</span>
+    <span>Total Factura: ${adjustedTotal.toLocaleString()}</span>
+    <span>Cambio: ${adjustedChange.toLocaleString()}</span>
+  </div>
+</div>
+<Button color="primary" className="finalize-invoice-button" onClick={handleFinishInvoice}>
+  Finalizar Factura
+</Button>
+</div>
+</Container>
   );
 }
 
-export default InvoicePreview;
+export default InvoicePreview
