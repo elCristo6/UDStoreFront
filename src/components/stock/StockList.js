@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FaInfo } from 'react-icons/fa';
 import { GrUpdate } from 'react-icons/gr';
+import { Button, Col, Container, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
 import { deleteProduct, getProducts } from '../../service/productService';
 import NewProduct from '../modal/newProduct/newProduct';
 import UpdateProductModal from '../modal/updateStock/updateStock';
@@ -144,130 +145,156 @@ const StockList = () => {
   const productsToDisplay = filteredProducts.length > 0 ? filteredProducts : null;
 
   return (
-    <div className="stock-list-container">
-      <div className="stock-header">
+    <Container className="themed-container" fluid={true}>
+      
+          <Row>
+    <Col xs = "12">
+      <div className="stock-header d-flex justify-content-between align-items-center">
         <h2 className="stock-title">Lista de Existencias</h2>
-        <button onClick={openModal} className="add-stock-button">Agregar productos</button>
-        <div className={`modal ${isModalOpen ? 'open' : ''}`} onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close" onClick={closeModal}>&times;</span>
+        <Button color="primary" onClick={openModal}>Agregar productos</Button>
+      </div>
+    </Col>
+  </Row>
+
+        {/* Modal de Reactstrap para agregar productos */}
+        <Modal isOpen={isModalOpen} toggle={closeModal}>
+          <ModalHeader toggle={closeModal}>Agregar Producto</ModalHeader>
+          <ModalBody>
             <NewProduct closeModal={closeModal} />
-          </div>
-        </div>
-      </div>
+          </ModalBody>
+        </Modal>
+                  <div className="stock-list-container">
+                
+                
 
-      <div className="stock-list">
-        <div className="controls">
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Buscar producto..."
-              value={searchTerm}
-              onChange={handleSearch}
-              className="input-style"
-            />
-          </div>
-          <div className="category-dropdown">
-            <select onChange={handleCategoryChange} value={selectedCategory} className="input-style">
-              {uniqueCategories.map(category => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="product-count">
-            {allProducts.length} Productos
-          </div>
-        </div>
-        {productsToDisplay ? (
-          productsToDisplay.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Cantidad </th>
-                  <th>Precio Tiendas</th>
-                  <th>Precio Final</th>
-                  <th>Caja</th>
-                  <th>Opciones</th>
-                  <th>Ultima fecha</th>
+                  <div className="stock-list">
+                  <Row className="mb-3">
+                      <Col md="4">
+                        <FormGroup>
+                          <Input
+                            type="text"
+                            name="search"
+                            id="productSearch"
+                            placeholder="Buscar producto..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md="4">
+                        <FormGroup>
+                          <Input
+                            type="select"
+                            name="category"
+                            id="productCategory"
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
+                          >
+                            {uniqueCategories.map((category, index) => (
+                              <option key={index} value={category}>{category}</option>
+                            ))}
+                          </Input>
+                        </FormGroup>
+                      </Col>
+                      <Col md="4" className="d-flex align-items-center justify-content-md-end">
+                        {allProducts.length} Productos
+                      </Col>
+                    </Row>
+                    {productsToDisplay ? (
+        productsToDisplay.length > 0 ? (
+          <Table dark responsive>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Tiendas</th>
+                <th>Precio Final</th>
+                <th>Caja</th>
+                <th>Opciones</th>
+                <th>Última fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productsToDisplay.map((product, index) => (
+                <tr key={index}>
+                  <td>{product.name}</td>
+                  <td>
+                    <span className={`stock-indicator ${getStockIndicator(product.stock)}`}></span>
+                    <span>{product.stock}</span>
+                  </td>
+                  <td>{product.price}</td>
+                  <td>{product.finalPrice}</td>
+                  <td>{product.box}</td>
+                  <td>
+                    <Button color="warning" size="sm" onClick={() => openUpdateModal(product)}>
+                      <GrUpdate />
+                    </Button>
+                    {' '}
+                    <Button color="info" size="sm" onClick={() => openDescriptionModal(product)}>
+                      <FaInfo />
+                    </Button>
+                    {' '}
+                    <Button color="danger" size="sm" onClick={() => openDeleteModal(product)}>
+                      <AiOutlineDelete />
+                    </Button>
+                  </td>
+                  <td>{formatDate(product.updatedAt)}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {productsToDisplay.map((product, index) => (
-                  <tr key={index}>
-                    <td>{product.name}</td>
-                    <td className="stock-cell">
-                    
-                      <span className={`stock-indicator ${getStockIndicator(product.stock)}`}></span>
-                      <span className="stock-space"></span> 
-                      <span className="stock-number">{product.stock}</span>
-                    </td>
-                    <td>{product.price}</td>
-                    <td>{product.price}</td>
-                    <td>{product.box}</td>
-                    <td>
-                      <button onClick={() => openUpdateModal(product)} className="icon-button"><GrUpdate /></button>
-                      <button onClick={() => openDescriptionModal(product)} className="icon-button green"><FaInfo /></button>
-                      <button onClick={() => openDeleteModal(product)} className="icon-button red"><AiOutlineDelete /></button>
-                    </td>
-                    <td>{formatDate(product.updatedAt)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No se encontraron productos que coincidan con los criterios de búsqueda.</p>
-          )
+              ))}
+            </tbody>
+          </Table>
         ) : (
-          <p>Ingresa un término de búsqueda para mostrar productos.</p>
-        )}
-      </div>
-
-      {isUpdateModalOpen && selectedProduct && (
-        <div className="modal open" onClick={closeUpdateModal}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <span className="close" onClick={closeUpdateModal}>&times;</span>
-            <UpdateProductModal product={selectedProduct} onClose={closeUpdateModal} />
-          </div>
-        </div>
+          <p>No se encontraron productos que coincidan con los criterios de búsqueda.</p>
+        )
+      ) : (
+        <p>Ingresa un término de búsqueda para mostrar productos.</p>
       )}
 
-      {isDescriptionModalOpen && selectedProduct && (
-        <div className="modal open" onClick={closeDescriptionModal}>
-          <div className="modal-content description-modal" onClick={e => e.stopPropagation()}>
-            <span className="close" onClick={closeDescriptionModal}>&times;</span>
-            <h3>{selectedProduct.name} - Descripción</h3>
-            <p>{selectedProduct.description}</p>
-          </div>
-        </div>
-      )}
-
-      {isDeleteModalOpen && selectedProduct && (
-        <div className="modal open" onClick={closeDeleteModal}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <span className="close" onClick={closeDeleteModal}>&times;</span>
-            <h3>Eliminar Producto</h3>
-            <p>¿Estás seguro de que quieres eliminar el producto {selectedProduct.name}?</p>
-            <div>
-              <label htmlFor="password">Contraseña:</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
             </div>
-            {!isPasswordCorrect && <p className="error-message">Contraseña incorrecta. Inténtalo de nuevo.</p>}
-            <div className="button-container">
-              <button onClick={() => handleDeleteProduct(selectedProduct._id)} className="delete-button">Eliminar</button>
-              <button onClick={closeDeleteModal} className="cancel-button">Cancelar</button>
-            </div>
+
+            {isUpdateModalOpen && selectedProduct && (
+  <Modal isOpen={isUpdateModalOpen} toggle={closeUpdateModal}>
+    <ModalHeader toggle={closeUpdateModal}>Actualizar Producto</ModalHeader>
+    <ModalBody>
+      <UpdateProductModal product={selectedProduct} onClose={closeUpdateModal} />
+    </ModalBody>
+  </Modal>
+)}
+
+{isDescriptionModalOpen && selectedProduct && (
+  <Modal isOpen={isDescriptionModalOpen} toggle={closeDescriptionModal}>
+    <ModalHeader toggle={closeDescriptionModal}>Descripción del Producto</ModalHeader>
+    <ModalBody>
+      <h3>{selectedProduct.name}</h3>
+      <p>{selectedProduct.description}</p>
+    </ModalBody>
+  </Modal>
+)}
+
+{isDeleteModalOpen && selectedProduct && (
+  <Modal isOpen={isDeleteModalOpen} toggle={closeDeleteModal}>
+    <ModalHeader toggle={closeDeleteModal}>Eliminar Producto</ModalHeader>
+    <ModalBody>
+      <p>¿Estás seguro de que quieres eliminar el producto {selectedProduct.name}?</p>
+      <FormGroup>
+        <Label for="password">Contraseña:</Label>
+        <Input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </FormGroup>
+      {!isPasswordCorrect && <p className="error-message">Contraseña incorrecta. Inténtalo de nuevo.</p>}
+      <Button color="danger" onClick={() => handleDeleteProduct(selectedProduct._id)}>Eliminar</Button>{' '}
+      <Button color="secondary" onClick={closeDeleteModal}>Cancelar</Button>
+    </ModalBody>
+  </Modal>
+)}
+
           </div>
-        </div>
-      )}
-    </div>
+       
+      </Container>
   );
 };
 

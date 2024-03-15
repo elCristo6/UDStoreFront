@@ -52,7 +52,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React from 'react';
 import './App.css';
-
+import { NavigationProvider } from './components/context/contextNewBill';
 import NewBill from './components/newBill/newBill';
 
 function App() {
@@ -60,9 +60,9 @@ function App() {
   return (
     <div className="App">
       
-        <NewBill />
-     
-      
+      <NavigationProvider>
+      <NewBill />
+    </NavigationProvider>
     </div>
   );
 }

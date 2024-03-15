@@ -2,14 +2,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { getBills } from '../../service/newBillService';
+import { NavigationContext } from '../context/contextNewBill';
 import Sidebar from '../sideBar/sideBar';
+import Stock from '../stock/StockList';
 import ClientForm from './ClientForm';
 import InvoicePreview from './InvoicePreview';
 import './NewBill.css';
 import ProductList from './ProductSeleccionList';
 import SendOrderForm from './SendOrderForm';
 
+
 class NewBill extends Component {
+  static contextType = NavigationContext; // Use the exported context here
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +43,49 @@ class NewBill extends Component {
   componentDidMount() {
     this.fetchLastInvoiceConsecutive();
 }
+
+renderActiveForm() {
+  const { activeScreen } = this.context; // Asume que has definido contextType en tu clase
+  const totalOrder = this.calculateTotal(); // Calcula el total como antes
+
+  // Asegúrate de pasar todas las funciones necesarias como props a los componentes hijos
+  switch (activeScreen) {
+    case 'cliente':
+      return (
+        <ClientForm
+          data={this.state.clientData}
+          onDataChange={this.handleClientDataChange}
+        />
+      );
+    case 'productos':
+      return (
+        <ProductList
+          data={this.state.productData}
+          onProductSelect={this.handleProductSelect}
+          onImpresionSubmit={this.handleImpresionSubmit}
+          onServicioSubmit={this.handleServicioSubmit}
+        />
+      );
+    case 'enviar':
+      return (
+        <SendOrderForm
+          paymentDetails={this.state.paymentDetails}
+          totalOrder={totalOrder}
+          onPaymentMethodChange={this.updatePaymentDetails}
+        />
+      );
+      case 'stock':
+        return <Stock />;
+     
+
+    default:
+      return null;
+  }
+}
+
+
+
+
 
 fetchLastInvoiceConsecutive = async () => {
   try {
@@ -203,7 +250,7 @@ fetchLastInvoiceConsecutive = async () => {
     const day = String(today.getDate()).padStart(2, '0'); // Agrega un cero delante si es necesario
     return `${year}-${month}-${day}`;
   }
-  
+  /*
   renderActiveForm = () => {
     const { activeMenu } = this.state;
     const totalOrder = this.calculateTotal(); // Calcular el total
@@ -248,6 +295,7 @@ fetchLastInvoiceConsecutive = async () => {
         return null;
     }
   };
+  */
   handleImpresionSubmit = (impresionData) => {
     // Manejo de datos de impresión
     this.setState(prevState => ({
@@ -256,41 +304,45 @@ fetchLastInvoiceConsecutive = async () => {
   };
   
   render() {
-    const { activeMenu } = this.state;
+    const { activeScreen } = this.context;
     const totalOrder = this.calculateTotal(); // Calcular el total
     const currentDate = this.getCurrentDate();
     const invoiceNumber = this.state.lastInvoiceConsecutive + 1;
-    return (
-      
-      <Row className="g-0">
-          <Sidebar activeMenu={activeMenu} setActiveMenu={this.setActiveMenu} />
-          <Col md="6"  lg = "6" xs = "6"className="newBillMainContent">
-            <div>
-            {this.renderActiveForm()}
-            </div>
-            
-          </Col>
-          
-          <Col  className="invoicePreviewContainer">
 
-          <InvoicePreview
-              clienteData={this.state.clientData}
-              productosData={this.state.productData}
-              onRemoveProduct={this.handleRemoveProduct} // Agregamos la función para eliminar productos
-              onIncrement={this.increaseQuantity}
-              onDecrement={this.decreaseQuantity}
-              invoiceNumber={invoiceNumber}
-              currentDate={currentDate}
-              totalOrder={totalOrder}
-              resetState={this.resetState}
-              paymentDetails={this.state.paymentDetails}
-              fetchLastInvoiceConsecutive={this.fetchLastInvoiceConsecutive}
-              impresionesData={this.state.impresionesData}
-              onRemoveImpresion={this.handleRemoveImpresion}
-              serviciosData={this.state.serviciosData}
-              onRemoveServicio={this.handleRemoveServicio}
-            />
-          </Col>
+    // Ajusta el tamaño de la columna para el contenido principal según si el InvoicePreview se muestra o no
+  const mainContentColSize = activeScreen === 'stock' ? '10' : '6'; // Asume que el Sidebar usa '2' de '12'
+
+    return (
+     
+      <Row className="g-0">
+          <Sidebar/>
+          <Col md={mainContentColSize} lg={mainContentColSize} xs={mainContentColSize} className="newBillMainContent">
+        <div>
+          {this.renderActiveForm()}
+        </div>
+      </Col>
+          
+          {activeScreen !== 'stock' && (
+            <Col className="invoicePreviewContainer">
+              <InvoicePreview
+                clienteData={this.state.clientData}
+                productosData={this.state.productData}
+                onRemoveProduct={this.handleRemoveProduct}
+                onIncrement={this.increaseQuantity}
+                onDecrement={this.decreaseQuantity}
+                invoiceNumber={invoiceNumber}
+                currentDate={currentDate}
+                totalOrder={totalOrder}
+                resetState={this.resetState}
+                paymentDetails={this.state.paymentDetails}
+                fetchLastInvoiceConsecutive={this.fetchLastInvoiceConsecutive}
+                impresionesData={this.state.impresionesData}
+                onRemoveImpresion={this.handleRemoveImpresion}
+                serviciosData={this.state.serviciosData}
+                onRemoveServicio={this.handleRemoveServicio}
+              />
+            </Col>
+      )}
         </Row>
      
     );
