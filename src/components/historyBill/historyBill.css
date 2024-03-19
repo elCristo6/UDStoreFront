@@ -1,0 +1,17 @@
+/* historyBill.css */
+
+.history-bill-container {
+    padding: 20px;
+    background-color: #121212;
+    color: #fff;
+  }
+  
+  .history-bill-title {
+    margin-bottom: 20px;
+  }
+  
+  .history-bill-table th,
+  .history-bill-table td {
+    border-color: #495057;
+  }
+  

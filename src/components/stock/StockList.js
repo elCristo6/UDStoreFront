@@ -145,7 +145,7 @@ const StockList = () => {
   const productsToDisplay = filteredProducts.length > 0 ? filteredProducts : null;
 
   return (
-    <Container className="themed-container" fluid={true}>
+    <Container className="themed-container stock-list-main-container" fluid={true}>
       
           <Row>
     <Col xs = "12">
@@ -164,8 +164,7 @@ const StockList = () => {
           </ModalBody>
         </Modal>
                   <div className="stock-list-container">
-                
-                
+    
 
                   <div className="stock-list">
                   <Row className="mb-3">
@@ -178,6 +177,7 @@ const StockList = () => {
                             placeholder="Buscar producto..."
                             value={searchTerm}
                             onChange={handleSearch}
+                            className="search-input"
                           />
                         </FormGroup>
                       </Col>
@@ -189,6 +189,7 @@ const StockList = () => {
                             id="productCategory"
                             value={selectedCategory}
                             onChange={handleCategoryChange}
+                            className="search-input"
                           >
                             {uniqueCategories.map((category, index) => (
                               <option key={index} value={category}>{category}</option>
@@ -204,20 +205,18 @@ const StockList = () => {
         productsToDisplay.length > 0 ? (
           <Table dark responsive>
             <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio Tiendas</th>
-                <th>Precio Final</th>
-                <th>Caja</th>
-                <th>Opciones</th>
-                <th>Última fecha</th>
-              </tr>
+            <th className="col-md-4">Producto</th>
+            <th className="col-md-1">Cantidad</th>
+            <th className="col-md-1">Precio Tiendas</th>
+            <th className="col-md-1">Precio Final</th>
+            <th className="col-md-1">Caja</th>
+            <th className="col-md-2">Opciones</th>
+            <th className="col-md-2">Última fecha</th>
             </thead>
             <tbody>
               {productsToDisplay.map((product, index) => (
                 <tr key={index}>
-                  <td>{product.name}</td>
+                  <td data-tooltip={product.name}>{product.name}</td>
                   <td>
                     <span className={`stock-indicator ${getStockIndicator(product.stock)}`}></span>
                     <span>{product.stock}</span>

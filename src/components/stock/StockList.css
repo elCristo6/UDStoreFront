@@ -1,213 +1,177 @@
-/* Estilos para el componente StockList */
+/* StockList.css */
+
+/* Contenedor principal */
 .stock-list-container {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #343a40; /* Borde oscuro */
-  border-radius: 5px;
-  background-color: #343a40; /* Fondo oscuro */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: #fff; /* Texto blanco */
+  background-color: #121212; /* Fondo oscuro */
+  padding: 20px; /* Espaciado interno */
+  color: #fff; /* Texto blanco */overflow-x: hidden; /* Oculta el desplazamiento horizontal */
+  overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido es más alto que el contenedor */
+  max-height: 85vh; /* Ajusta la altura máxima según tus necesidades, vh es un porcentaje de la altura de la ventana */
+  margin-right: 0px; /* Espacio a la derecha para evitar que la barra de desplazamiento se superponga a los contenidos */
+  scrollbar-width: none; /* Oculta las barras de desplazamiento en Firefox */
+  -ms-overflow-style: none;
 }
-
-.themed-container {
-  background-color: #343a40; /* Fondo oscuro */
-  color: #ffffff; /* Texto blanco */
-  padding: 20px; /* Espaciado alrededor del contenido */
+/* También querrás asegurarte de que el contenedor tenga un alto que no requiera desplazamiento */
+.stock-list {
+  max-height: 100%; /* O el alto máximo deseado */
 }
-/* Estilos para el header de la lista de existencias */
+/* Contenedor general y título */
 .stock-header {
-  margin-bottom: 20px; /* Espaciado debajo del header */
+  background-color: #121212; /* Igual que el fondo del contenedor principal */
+  color: #ffffff; /* Texto blanco para el título y otros textos */
 }
 
+/* Título del StockList */
 .stock-title {
-  margin: 0; /* Remueve el margen por defecto */
+  font-size: 24px; /* Tamaño del texto del título */
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.stock-list-main-container {
+  margin-left: 15px; /* Ajusta según sea necesario */
+}
+/* Botón para agregar productos */
+.add-stock-button {
+  background-color: #17a2b8; /* Color azul para botones */
   color: #ffffff; /* Texto blanco */
+  border: none; /* Sin bordes */
+  border-radius: 20px; /* Esquinas redondeadas */
 }
 
-/* Estilos para el botón de agregar productos */
-.button-primary {
-  background-color: #007bff; /* Azul Reactstrap */
-  border-color: #007bff; /* Borde del mismo color */
+/* Botón para agregar productos al pasar el cursor */
+.add-stock-button:hover {
+  background-color: #138496; /* Color azul más oscuro */
 }
 
-
+/* Estilos para la tabla */
 .stock-list table {
-  width: 100%;
-  border-collapse: collapse;
+  color: #fff; /* Texto blanco */
+  border-collapse: collapse; /* Espacios entre celdas colapsados */
+  margin-bottom: 0; 
 }
 
+/* Celdas de la tabla */
 .stock-list th, .stock-list td {
-  border: 1px solid #e0e0e0;
-  padding: 8px 12px;
-  text-align: left;
-}
-.stock-list .icon-button.green {
-  background-color: yellow; /* Color verde */
-  margin-left: 5px; /* Agregar margen a la derecha */
-  color: black;
+  border: 1px solid #495057; /* Borde de las celdas */
 }
 
-.stock-list .icon-button.green:hover {
-  background-color: #45a049; /* Un tono más oscuro de verde al pasar el cursor */
+/* Botones dentro de la tabla */
+.stock-list .icon-button {
+  color: white; /* Iconos de color blanco */
+  background-color: transparent; /* Fondo transparente */
 }
 
-
-.stock-list button {
-  background-color: greenyellow;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-  color: black;
+/* Botones de iconos al pasar el cursor */
+.stock-list .icon-button:hover {
+  background-color: #495057; /* Fondo al pasar el cursor */
 }
 
-.stock-list button:hover {
-  background-color: #007799;
-}
-
-
-.search-bar input {
-  width: 100%;
-  padding: 5px 10px; /* Reduzco el padding para que sea más angosto */
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  margin-left: 2%;
-}
-
-.controls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.category-dropdown {
-  height: 35px;
-
-}
-
-.category-dropdown select {
-  margin-top: 6%;
-  margin-left: 10%;
-  padding: 5px 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-
-}.input-style {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  transition: border-color 0.3s;
-}
-
-.input-style:focus {
-  border-color: #007bff;
-  outline: none;
-}
-.product-count {
-  margin-top: 20px;
-  margin-left: 300px;
-  font-weight: bold; /* Establecer el peso de la fuente a normal */
-  font-size: 14px;     /* Establecer un tamaño de fuente más pequeño */
-  color: #FFFFFF;        /* Establecer un color gris */
-  text-align: right;
-}
-
+/* Indicadores de Stock */
 .stock-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
+  border-radius: 50%; /* Forma circular */
 }
 
+/* Indicadores de Stock de colores según cantidad */
 .stock-indicator.red {
-  background-color: red;
+  background-color: #dc3545; /* Rojo para bajo stock */
 }
 
 .stock-indicator.yellow {
-  background-color: yellow;
+  background-color: #ffc107; /* Amarillo para medio stock */
 }
 
 .stock-indicator.green {
-  background-color: green;
-}
-.stock-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 20px;
+  background-color: #28a745; /* Verde para alto stock */
 }
 
-.stock-title {
-  font-size: 24px;
-  color: #333;
-  margin: 0; /* Remove default margin */
-}
-
-.add-stock-button {
-  background-color: #4CAF50;
-  color: #ffffff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-stock-button:hover {
-  background-color: #45a049;
-}
-.modal {
-  display: none; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal.open {
-  display: flex;
-}
-
+/* Modales */
 .modal-content {
-  background-color:  #343a40;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  position: relative;
-  color: #ffffff; 
-}
-.modal-header {
-  border-bottom: 1px solid #495057; /* Borde más claro para el header del modal */
+  background-color: #343a40; /* Fondo del modal */
+  color: #fff; /* Texto blanco en el modal */
 }
 
+/* Cierre de modal */
 .close {
-  color: #ffffff;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
+  color: #fff; /* Botón de cierre blanco */
 }
 
-.close:hover, .close:focus {
-  color: #adb5bd;
-  text-decoration: none;
-  cursor: pointer;
+/* Barra de búsqueda y selector de categorías con fondo oscuro */
+.input-style, .form-control, .custom-select {
+  background-color: #2c2c2c; /* Fondo oscuro para los inputs y select */
+  border: 1px solid #495057; /* Borde sutil para que destaque sobre el fondo */
+  color: #ffffff; /* Texto blanco para que sea legible */
+  /* ... tus otros estilos ... */
 }
+
+
+/* Foco en inputs */
+.input-style:focus, .form-control:focus {
+  border-color: #80bdff; /* Color de borde al enfocar */
+  box-shadow: none; /* Sin sombra al enfocar */
+}
+
+/* Estilos para contenedores y tablas responsivas */
+.themed-container, .table-responsive {
+  background-color: #343a40; /* Fondo oscuro para contenedores y tablas */
+  overflow-x: hidden; /* Esconde el desplazamiento horizontal */
+  overflow-y: hidden; /* Esconde el desplazamiento vertical */
+}
+
+/* Ajuste de la tabla responsiva para que se ajuste al padding del contenedor */
+.table-responsive {
+margin-left: -20px;
+margin-right: -20px;
+}
+.stock-list table {
+  width: 100%; /* Aseguramos que la tabla ocupe todo el ancho disponible */
+  table-layout: fixed; /* Fija el ancho de las columnas */
+}
+
+.stock-list th, .stock-list td {
+  border: 1px solid #495057; /* Un borde más claro para las celdas */
+  overflow: hidden; /* Oculta el contenido que desborde */
+  text-overflow: ellipsis; /* Muestra puntos suspensivos para contenido recortado */
+  white-space: nowrap; /* Mantiene el contenido de las celdas en una sola línea */
+  max-width: 0; /* Permite que text-overflow funcione con overflow: hidden */
+}
+
+/* Utiliza tooltips para mostrar el contenido completo al pasar el cursor */
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 1.2;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Ajustes para las celdas de la fecha para manejar correctamente el espacio */
+.stock-list .fecha-cell {
+  min-width: 90px; /* Ancho mínimo para la celda de fecha */
+}
+
+/* Asegurarte de que el modal también sea responsivo */
+.modal-content {
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+}
+
+.stock-list-main-container {
+  margin-left: 25px; /* o el espacio que consideres necesario */
+  /* ... otros estilos ... */
+}
+/* Contenedor que permite desplazamiento vertical sin mostrar la barra de desplazamiento */
+
+
+/* Para ocultar la barra de desplazamiento en Webkit & Blink browsers, como Safari, Chrome y Opera */
+.stock-list-container::-webkit-scrollbar {
+  display: none;
+}
+

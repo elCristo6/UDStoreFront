@@ -64,3 +64,20 @@ body {
   overflow-y: auto; /* Permite desplazamiento vertical si el contenido es demasiado largo */
 }
 
+
+.newBillMainContent.main-content {
+  margin-left: 15px; /* Añade un espacio al lado del sidebar */
+  padding: 15px; /* Espacio dentro del contenedor principal */
+}
+
+/* Si es necesario que `StockList` y otros componentes tengan la misma altura: */
+.newBillMainContent.main-content,
+.invoicePreviewContainer {
+  height: 100%; /* Asegura que los componentes llenen el contenedor padre */
+}
+
+/* O si quieres que ocupen la pantalla completa en altura */
+.newBillMainContent.main-content,
+.invoicePreviewContainer {
+  min-height: 100vh; /* Ocupan al menos el alto de la ventana */
+}

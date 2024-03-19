@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { getBills } from '../../service/newBillService';
 import { NavigationContext } from '../context/contextNewBill';
+import HistoryBill from '../historyBill/historyBill';
 import Sidebar from '../sideBar/sideBar';
 import Stock from '../stock/StockList';
 import ClientForm from './ClientForm';
@@ -10,7 +11,6 @@ import InvoicePreview from './InvoicePreview';
 import './NewBill.css';
 import ProductList from './ProductSeleccionList';
 import SendOrderForm from './SendOrderForm';
-
 
 class NewBill extends Component {
   static contextType = NavigationContext; // Use the exported context here
@@ -76,7 +76,9 @@ renderActiveForm() {
       );
       case 'stock':
         return <Stock />;
-     
+        
+        case 'historyBill':
+          return <HistoryBill />;
 
     default:
       return null;
@@ -316,13 +318,13 @@ fetchLastInvoiceConsecutive = async () => {
      
       <Row className="g-0">
           <Sidebar/>
-          <Col md={mainContentColSize} lg={mainContentColSize} xs={mainContentColSize} className="newBillMainContent">
+          <Col md={mainContentColSize} lg={mainContentColSize} xs={mainContentColSize} className="newBillMainContent main-content">
         <div>
           {this.renderActiveForm()}
         </div>
       </Col>
           
-          {activeScreen !== 'stock' && (
+      {activeScreen !== 'stock' && activeScreen !== 'historyBill' && (
             <Col className="invoicePreviewContainer">
               <InvoicePreview
                 clienteData={this.state.clientData}
@@ -343,6 +345,7 @@ fetchLastInvoiceConsecutive = async () => {
               />
             </Col>
       )}
+       
         </Row>
      
     );
