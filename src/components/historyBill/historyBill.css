@@ -1,17 +1,141 @@
 /* historyBill.css */
 
+/* Contenedor principal con el mismo esquema de colores oscuros */
 .history-bill-container {
-    padding: 20px;
-    background-color: #121212;
-    color: #fff;
-  }
+  min-height: 100vh; /* Altura mínima del contenedor que contiene la tabla y el total */
+  display: flex; /* Usa flexbox para organizar los hijos */
+  flex-direction: column; /* Los hijos se organizan en columna */
+  justify-content: space-between; /* Distribuye los espacios superior e inferior equitativamente */
+  padding-right: 0; /* Sin padding a la derecha */
+  padding-left: 0; /* Sin padding a la izquierda */
+  margin: 0; /* Elimina cualquier margen predeterminado */
+  padding-right: 0; /* Sin padding a la derecha */
+  padding-left: 0; /* Sin padding a la izquierda */
+  margin: 0; /* Elimina cualquier margen predeterminado */
+}
+/* Ocultar la barra de desplazamiento en navegadores Webkit & Blink */
+.history-bill-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Título con el estilo apropiado */
+.history-bill-title {
+  font-size: 24px; /* Tamaño del texto del título */
+  color: #ffffff; /* Texto blanco */
+  margin-bottom: 1rem; /* Espacio debajo del título */
+}
+
+/* Estilos para la tabla */
+.history-bill-table {
+  color: #fff; /* Texto blanco */
+  background-color: #23272b; /* Fondo para las celdas similar al StockList */
+  border-collapse: collapse; /* Colapsa los bordes de la celda */
+  width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+  table-layout: fixed; /* Fija el ancho de las columnas */
+}
+
+/* Celdas de la tabla */
+.history-bill-table th,
+.history-bill-table td {
+  border: 1px solid #495057; /* Borde de celdas claro para contraste */
+  overflow: hidden; /* Oculta contenido que desborde */
+  text-overflow: ellipsis; /* Puntos suspensivos para contenido recortado */
+  white-space: nowrap; /* Contenido en una línea */
+  padding: .75rem; /* Relleno dentro de las celdas */
+  text-align: left; /* Alineación de texto a la izquierda */
   
-  .history-bill-title {
-    margin-bottom: 20px;
-  }
-  
-  .history-bill-table th,
-  .history-bill-table td {
-    border-color: #495057;
-  }
-  
+}
+/* Ajusta las celdas de encabezado y las celdas del cuerpo para la columna "Detalles" */
+.history-bill-table th.detalle,  /* Agregar esta clase en el <th> de "Detalles" en tu JSX */
+.history-bill-table td.detalle { /* Agregar esta clase en cada <td> de "Detalles" en tu JSX */
+  min-width: 50px; /* O cualquier otro valor que prefieras */
+  width:50%; /* Esto hará que la columna tome el 30% del ancho de la tabla */
+}
+
+/* Encabezado de la tabla con fondo oscuro */
+.history-bill-table thead th {
+  background-color: #495057; /* Fondo oscuro para el encabezado */
+}
+
+/* Botones de acción */
+.history-bill-table .acciones .btn {
+  color: #fff; /* Texto blanco */
+  background-color: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+}
+
+/* Botones de acción al pasar el cursor */
+.history-bill-table .acciones .btn:hover {
+  background-color: #495057; /* Fondo al pasar el cursor */
+}
+
+/* Tooltip estilizado para mostrar información adicional */
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 1.2;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Contenedor de la tabla responsivo */
+.history-bill-table-container {
+  overflow-x: hidden; /* Esconde el desplazamiento horizontal */
+  overflow-y: hidden; /* Esconde el desplazamiento vertical */
+  flex: 1; /* La tabla se expande para ocupar el espacio disponible */
+  overflow-y: auto; /* Permite el desplazamiento dentro de la tabla si es necesario */
+
+}
+
+/* Ajuste del margen de la tabla responsiva para alinearse con el contenedor */
+.history-bill-table-container {
+ 
+  margin-right: -150px;
+}
+/* Estilo del total de las facturas para ocupar todo el ancho */
+.history-bill-total {
+  position: sticky; /* Se mantiene visible en la parte inferior de la vista */
+  bottom: 0; /* Fijar en la parte inferior */
+  left: 0; /* Asegurar que inicie desde el borde izquierdo */
+  right: 0; /* Asegurar que se extienda hasta el borde derecho */
+  background: #333; /* Fondo oscuro acorde al tema */
+  color: #ffffff; /* Texto blanco para mayor contraste */
+  padding: 10px 0; /* Espaciado interno solo vertical */
+  border-top: 1px solid #495057; /* Línea divisoria para definir el espacio */
+  z-index: 1000; /* Asegurarse de que el total se muestre encima de otros elementos */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Sombra para dar sensación de elevación */
+  width: 100%; /* Asegurarse de que ocupa todo el ancho */
+}
+
+/* Corrección del contenedor de la tabla para que no tenga margen negativo */
+.history-bill-table-container {
+  overflow-x: auto; /* Permite el desplazamiento horizontal si es necesario */
+  overflow-y: auto; /* Permite el desplazamiento vertical si es necesario */
+  margin-right: 0; /* Sin margen a la derecha */
+}/* Ajusta las celdas de encabezado y las celdas del cuerpo para la columna "Detalles" */
+.history-bill-table th.detalle,  /* Agregar esta clase en el <th> de "Detalles" en tu JSX */
+.history-bill-table td.detalle { /* Agregar esta clase en cada <td> de "Detalles" en tu JSX */
+  min-width: 200px; /* O cualquier otro valor que prefieras */
+  width: 30%; /* Esto hará que la columna tome el 30% del ancho de la tabla */
+}
+
+/* Opcional: Ajusta el ancho de las demás celdas si es necesario para mantener la proporción deseada */
+.history-bill-table th, 
+.history-bill-table td {
+  width: auto; /* Esto permite que las celdas restantes se ajusten automáticamente */
+  /* Los otros estilos ya definidos se mantienen */
+}
+
+/* Asegúrate de que los estilos de la tabla permitan ajustes de ancho */
+.history-bill-table {
+  table-layout: auto; /* Cambia a 'auto' para permitir que el ancho de las columnas sea flexible */
+  /* Los otros estilos ya definidos se mantienen */
+}

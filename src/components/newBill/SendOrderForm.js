@@ -25,11 +25,13 @@ const SendOrderForm = ({ totalOrder, onPaymentMethodChange }) => {
     // Aquí actualizamos el estado en NewBill
     onPaymentMethodChange(selectedPaymentMethod, amount, finalChange);
   };
-
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Previene el comportamiento predeterminado de enviar el formulario
+  };
   return (
     <Container className="sof-container">
       <h2 className="sof-titulo">Confirma tu Pedido</h2>
-      <Form>
+      <Form  onSubmit={handleSubmit}>
         <Row>
           <Col>
             <p>Su Total es de: ${totalOrder.toString()}</p>

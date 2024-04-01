@@ -37,9 +37,7 @@ body {
 .newBillIcon {
   color: white; /* Íconos de color blanco */
   font-size: 1.5em; /* Tamaño del ícono */@media (min-width: 1200px) { /* Ajusta este valor según el breakpoint de `xl` en tu proyecto */
-    .invoicePreviewContainer {
-      /* Estilos específicos para pantallas grandes */
-    }
+     
   }
 }
 
@@ -66,8 +64,8 @@ body {
 
 
 .newBillMainContent.main-content {
-  margin-left: 15px; /* Añade un espacio al lado del sidebar */
-  padding: 15px; /* Espacio dentro del contenedor principal */
+  margin-left: 20px; /* Añade un espacio al lado del sidebar */
+  padding: 4px; /* Espacio dentro del contenedor principal */
 }
 
 /* Si es necesario que `StockList` y otros componentes tengan la misma altura: */
@@ -76,8 +74,3 @@ body {
   height: 100%; /* Asegura que los componentes llenen el contenedor padre */
 }
 
-/* O si quieres que ocupen la pantalla completa en altura */
-.newBillMainContent.main-content,
-.invoicePreviewContainer {
-  min-height: 100vh; /* Ocupan al menos el alto de la ventana */
-}

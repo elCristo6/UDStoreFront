@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import { Button, Col, Container, ListGroup, Row } from 'reactstrap';
 import { addBill } from '../../service/newBillService';
-import { registerPrint } from '../../service/registerService';
+//import { registerPrint } from '../../service/registerService';
 import './InvoicePreview.css';
 
 // Componente ProductItem que representa un elemento de producto en la factura
@@ -135,12 +135,12 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
     try {
       const response = await addBill(invoiceData);
       if (response) {
-       const printResponse = await registerPrint();
+      /* const printResponse = await registerPrint();
         if (printResponse.success === false) {
           console.log('La impresión falló, pero la factura se procesó correctamente:', printResponse.message);
         } else {
           console.log('Respuesta de la impresión:', printResponse);
-        }
+        }*/
         setShowConfirmation(true);
         setTimeout(() => {
           alert('Factura enviada exitosamente.');
@@ -164,7 +164,7 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
       )}
       <Row className="invoice-header">
         <Col className="text-center">
-          <h3>Factura #{invoiceNumber}</h3>
+          <h3>Factura de venta  #{invoiceNumber}</h3>
         </Col>
       </Row>
       <Row>
