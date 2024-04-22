@@ -112,6 +112,8 @@ class NewBill extends Component {
         change: 0,
       },
       productData: [],
+      impresionesData: [],
+      serviciosData: [],
       orderData: {},
     });
   };

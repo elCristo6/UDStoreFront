@@ -2,7 +2,7 @@
 // Utiliza fetch API para realizar la petición GET
 export const registerPrint = async () => {
     try {
-      const response = await fetch('http://192.168.0.5:3001/write', {
+      const response = await fetch('http://localhost:3001/write', {
         method: 'GET', // Especifica el método GET
       });
       if (!response.ok) {
