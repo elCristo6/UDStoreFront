@@ -1,19 +1,17 @@
-
-
 /* Asegúrate de que el Container de Reactstrap no tenga padding extra que cause el desbordamiento */
 .container-fluid {
   padding-right: 0;
   padding-left: 0;
-  /* ...otros estilos si son necesarios... */
 }
+
 .invoice-preview {
   display: flex;
   flex-direction: column;
-  justify-content:flex-start;
+  justify-content: flex-start;
   height: 100vh;
   background-color: #121212;
   color: #ffffff;
-  padding: 0rem;
+  padding: 0;
   border-radius: 0.5rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   overflow-x: hidden;
@@ -56,10 +54,11 @@
   margin-bottom: 1rem;
   -ms-overflow-style: none; /* Oculta la barra de desplazamiento para IE y Edge */
 }
-/* Oculta la barra de desplazamiento en Webkit & Blink browsers, como Safari, Chrome y Opera */
+
 .items-list::-webkit-scrollbar {
-  display: none;
+  display: none; /* Oculta la barra de desplazamiento en Webkit & Blink browsers, como Safari, Chrome y Opera */
 }
+
 .item {
   background-color: #1c1c1c;
   border: 1px solid #333;
@@ -68,18 +67,74 @@
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  height: 60px;
-  min-height: 50px;
   justify-content: space-between;
 }
 
+.product-info {
+  flex: 3; /* Hacemos que el nombre del producto ocupe más espacio */
+  overflow: hidden;
+  max-width: 220px;
+}
+
+.item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+  font-weight: bold;
+  max-width: 100%;
+}
+
+.input-paga-con{
+  background-color: #333;
+  width: 100%;
+  height: 50px;
+  color: #fff;
+  margin-right: 20px;
+  border-bottom: 2px solid #555; /* Borde inferior más oscuro para resaltar */
+}
+.input-paga-con:focus{
+  outline: none; /* Remueve el contorno predeterminado al enfocar */
+  border-bottom: 2px solid #007bff; /* Borde inferior azul al enfocar */
+  color: #3b3a3a; /* Texto blanco al enfocar para mayor contraste */
+  color: #ffffff; /* Texto blanco al enfocar para mayor contraste */
+  background-color: #1c1e21; /* Un fondo ligeramente más claro al enfocar */
+  transition: background-color 0.3s; /* Transición suave del fondo */
+}
+.input-paga-con::-webkit-outer-spin-button,
+.input-paga-con::-webkit-inner-spin-button {
+-webkit-appearance: none; /* Para Webkit (Chrome, Safari, Opera) */
+margin: 0; /* Opcional: quita el margen si lo hubiera */
+}
+
+.item-price-input {
+  background-color: #333;
+  width: 90px;
+  height: 30px;
+  color: #fff;
+  margin-right: 20px;
+  border-bottom: 2px solid #555; /* Borde inferior más oscuro para resaltar */
+}
+
+.item-price-input::-webkit-outer-spin-button,
+.item-price-input::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Para Webkit (Chrome, Safari, Opera) */
+  margin: 0; /* Opcional: quita el margen si lo hubiera */
+}
+.item-price-input:focus {
+  outline: none; /* Remueve el contorno predeterminado al enfocar */
+  border-bottom: 2px solid #007bff; /* Borde inferior azul al enfocar */
+  color: #3b3a3a; /* Texto blanco al enfocar para mayor contraste */
+  color: #ffffff; /* Texto blanco al enfocar para mayor contraste */
+  background-color: #1c1e21; /* Un fondo ligeramente más claro al enfocar */
+  transition: background-color 0.3s; /* Transición suave del fondo */
+}
 .quantity {
   display: flex;
   align-items: center;
 }
 
-.quantity button,
-.delete-button button {
+.quantity button {
   background-color: #333;
   color: #fff;
   border: none;
@@ -88,41 +143,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
   margin: 0 0.1rem;
 }
 
 .quantity span {
   min-width: 20px;
   text-align: center;
-}
-
-.item-name {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-right: 0.5rem;
-}
-
-.quantity button:hover,
-.delete-button button:hover,
-.finish-invoice-button button:hover {
-  background-color: #003b80;
-}
-
-.finish-invoice-button {
-  flex-shrink: 0;
-  margin-top: auto;
+  color: #ffffff;
 }
 
 .item-total {
-  font-weight: bold;
-  margin-left: auto;
-  color: #0056b3;
-}
-
-.total-label, .total-amount {
-  font-size: 1.5rem;
   font-weight: bold;
   color: #0056b3;
 }
@@ -134,12 +164,9 @@
     margin-top: 0;
   }
 
-  .item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+ 
 
-  .item-name, .item-price, .item-total {
+  .item-name, .item-price-input, .item-total {
     white-space: normal;
     overflow-wrap: break-word;
   }
@@ -147,26 +174,24 @@
   .quantity, .delete-button {
     justify-content: flex-start;
   }
-}.confirmation-animation {
+}
+
+.confirmation-animation {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 48px;
   color: green;
-  /* Añade tu animación aquí */
   animation: confirmAnimation 2s ease forwards;
 }
 
-.product-info, .quantity {
-  flex: 1 0 auto; /* Añadir algún espacio alrededor del contenido */
-}
 @keyframes confirmAnimation {
   0% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
   50% { opacity: 1; }
   100% { opacity: 0; transform: scale(1.5) translate(-50%, -50%); }
 }
-/* Estilos para la sección de ajustes y detalles de la factura */
+
 .adjustments-and-summary {
   display: flex;
   justify-content: space-between;
@@ -187,45 +212,65 @@
 }
 
 .adjust-button {
-  flex: 1; /* Ocupan todo el espacio disponible equitativamente */
-  margin: 0 10px; /* Espaciado entre botones */
-  /* Resto de estilos */
+  flex: 1;
+  margin: 0 10px;
+}
+
+.adjust-button-pago {
+  background-color: #007bff;
+  color: #fff;
+  flex: 1;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.adjust-button-pago.seleccionado {
+  background-color: #28a745;
+  font-weight: bold;
+}
+
+.input-pago {
+  width: 50%;
+  height: 20px;
 }
 
 .payment-details {
   display: flex;
   flex-direction: column;
-  color: #00afff; /* Texto azul acorde al tema */
+  color: #00afff;
   justify-content: center;
-  flex: 1; /* Ocupa la mitad del espacio disponible */
-  
-
+  flex: 1;
 }
 
 .finalize-invoice-button {
-  
-  width: 100%; /* Hace que el botón se ajuste al ancho del contenedor */
-  box-sizing: border-box; /* Asegura que el padding y border estén incluidos en el ancho */
-  
-  /* ...otros estilos... */
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Esto hace que el wrapper crezca y tome todo el espacio disponible */
-  overflow: hidden; /* Agregar scroll a la lista de productos si se desborda */
+  flex-grow: 1;
+  overflow: hidden;
 }
+
 .element-background {
   background-color: #1c1c1c;
   border: 1px solid #333;
   border-radius: 0.5rem;
   padding: 0.5rem;
 }
-/* Estilo para el footer para mantenerlo abajo */
+
 .footer {
-  margin-top: auto; /* Esto empujará el footer hacia abajo */
+  margin-top: auto;
   overflow: hidden;
 }
+
 .item, .adjustment-buttons, .payment-details {
-  max-width: 100%; /* Evita que estos elementos se extiendan más allá de su contenedor */
+  max-width: 100%;
+}
+
+.text-right {
+  text-align: right;
 }

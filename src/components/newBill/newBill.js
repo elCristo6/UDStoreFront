@@ -10,7 +10,7 @@ import ClientForm from './ClientForm';
 import InvoicePreview from './InvoicePreview';
 import './NewBill.css';
 import ProductList from './ProductSeleccionList';
-import SendOrderForm from './SendOrderForm';
+//import SendOrderForm from './SendOrderForm';
 
 class NewBill extends Component {
   static contextType = NavigationContext;
@@ -45,7 +45,7 @@ class NewBill extends Component {
 
   renderActiveForm() {
     const { activeScreen } = this.context;
-    const totalOrder = this.calculateTotal();
+   // const totalOrder = this.calculateTotal();
 
     switch (activeScreen) {
       case 'cliente':
@@ -64,14 +64,14 @@ class NewBill extends Component {
             onServicioSubmit={this.handleServicioSubmit}
           />
         );
-      case 'enviar':
+     /* case 'enviar':
         return (
           <SendOrderForm
             paymentDetails={this.state.paymentDetails}
             totalOrder={totalOrder}
             onPaymentMethodChange={this.updatePaymentDetails}
           />
-        );
+        );*/
       case 'stock':
         return <Stock />;
       case 'historyBill':
@@ -133,6 +133,18 @@ class NewBill extends Component {
       clientData: { ...prevState.clientData, ...data },
     }));
   };
+  handlePriceChange = (productId, newPrice) => {
+    this.setState((prevState) => ({
+      productData: prevState.productData.map((product) => {
+        if (product._id === productId) {
+          return { ...product, price: newPrice };
+        }
+        return product;
+      }),
+    }));
+  };
+  
+
 
   calculateTotal = () => {
     const { productData, impresionesData, serviciosData } = this.state;
@@ -266,6 +278,8 @@ class NewBill extends Component {
               onRemoveImpresion={this.handleRemoveImpresion}
               serviciosData={this.state.serviciosData}
               onRemoveServicio={this.handleRemoveServicio}
+              onPaymentMethodChange={this.updatePaymentDetails}
+              onPriceChange={this.handlePriceChange} 
             />
           </Col>
         )}

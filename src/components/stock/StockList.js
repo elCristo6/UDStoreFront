@@ -206,7 +206,7 @@ const StockList = () => {
           <Table dark responsive>
             <thead>
             <th className="col-md-4">Producto</th>
-            <th className="col-md-1">Cantidad</th>
+            <th className="col-md-2">Cantidad</th>
             <th className="col-md-1">Precio Tiendas</th>
             <th className="col-md-1">Precio Final</th>
             <th className="col-md-1">Caja</th>

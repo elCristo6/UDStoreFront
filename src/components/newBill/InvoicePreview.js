@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
-import { Button, Col, Container, ListGroup, Row } from 'reactstrap';
+import { Button, Col, Container, FormGroup, Input, Label, ListGroup, Row } from 'reactstrap';
 import { addBill } from '../../service/newBillService';
 import { registerPrint } from '../../service/registerService';
 import './InvoicePreview.css';
-
 // Componente ProductItem que representa un elemento de producto en la factura
 function ProductItem(props) {
-  const { product, onRemoveProduct, onIncrement, onDecrement } = props;
-  
+  const { product, onRemoveProduct, onIncrement, onDecrement,onPriceChange } = props;
+  const [updatedPrice, setUpdatedPrice] = useState(product.price); // State to hold the updated price
+
+  const handlePriceChange = (event) => {
+    const newPrice = parseFloat(event.target.value);
+    setUpdatedPrice(newPrice); // Update the state with the new price
+    onPriceChange(product._id, newPrice);
+  };
   return (
-    <Row className="item">
-      <Col xs={6} className="product-info">
+    <Row className="item align-items-center">
+      <Col xs={5} className="product-info">
         <span className="item-name">{product.name}</span>
-        <span className="item-price">${product.price}</span>
       </Col>
-      <Col xs={4} className="quantity">
+      <Col xs={2} className="d-flex align-items-center">
+        <Input
+          type="number"
+          className="item-price-input"
+          value={updatedPrice}
+          onChange={handlePriceChange}
+        />
+      </Col>
+      <Col xs={2} className="quantity d-flex align-items-center">
         <Button color="danger" size="sm" onClick={() => onRemoveProduct(product._id)}>
           <FaTrash />
         </Button>
@@ -28,7 +40,7 @@ function ProductItem(props) {
         </Button>
       </Col>
       <Col xs={2} className="text-right">
-        <span className="item-total">${product.price * product.quantity}</span>
+        <span className="item-total">${updatedPrice * product.quantity}</span>
       </Col>
     </Row>
   );
@@ -78,17 +90,45 @@ function ServicioItem({ servicio, onRemoveServicio }) {
 
 
 // Componente InvoicePreview que muestra la factura completa
-function InvoicePreview({ clienteData, productosData, impresionesData,serviciosData,onRemoveServicio,onRemoveProduct, onIncrement, onDecrement,onRemoveImpresion, invoiceNumber, totalOrder, currentDate,resetState,paymentDetails ,fetchLastInvoiceConsecutive}) {
+function InvoicePreview({ onPaymentMethodChange,clienteData, productosData, impresionesData,serviciosData,
+  onRemoveServicio,onRemoveProduct, onIncrement, onDecrement,onRemoveImpresion, 
+  onPriceChange, invoiceNumber, totalOrder, currentDate,resetState,paymentDetails ,fetchLastInvoiceConsecutive}) {
+
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [adjustedTotal, setAdjustedTotal] = useState(totalOrder);
   const [adjustedChange, setAdjustedChange] = useState(paymentDetails.change);
-
-  // Actualizar adjustedTotal cuando totalOrder cambie
-  useEffect(() => {
-    setAdjustedTotal(totalOrder);
-    setAdjustedChange(paymentDetails.amountPaid - totalOrder);// También restablece el cambio cada vez que totalOrder cambie
-  }, [totalOrder, paymentDetails.amountPaid]); // Escuchar cambios en totalOrder
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Efectivo');
+  const [cantidadPaga, setCantidadPaga] = useState('');
   
+
+  const handleCantidadPagaChange = (event) => {
+    const amount = event.target.value;
+    setCantidadPaga(amount);
+    const calculatedChange = parseFloat(amount) - adjustedTotal;
+    const finalChange = calculatedChange > 0 ? calculatedChange.toString() : '0';
+  
+
+    // Aquí actualizamos el estado en NewBill
+    onPaymentMethodChange(selectedPaymentMethod, amount, finalChange);
+  };
+
+  const handlePaymentMethodClick = (method) => {
+    setSelectedPaymentMethod(method);
+    // Envía el método de pago seleccionado al componente padre si es necesario
+    if(onPaymentMethodChange) {
+      onPaymentMethodChange(method);
+    }
+  };
+
+  useEffect(() => {
+    const totalProducts = productosData.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const totalImpresiones = impresionesData.reduce((acc, impresion) => acc + impresion.total, 0);
+    const totalServicios = serviciosData.reduce((acc, servicio) => acc + servicio.valor, 0);
+    const newTotal = totalProducts + totalImpresiones + totalServicios;
+    setAdjustedTotal(newTotal);
+    setAdjustedChange(paymentDetails.amountPaid - newTotal);
+  }, [productosData, impresionesData, serviciosData, paymentDetails.amountPaid]);
+
   const handleAdjustTotal = (adjustValue) => {
     setAdjustedTotal((prevTotal) => {
       const newTotal = Math.max(0, prevTotal + adjustValue);
@@ -97,6 +137,10 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
       return newTotal;
     });
   };
+
+
+  
+
   const handleFinishInvoice = async () => {
     const formattedProducts = productosData.map((item) => ({
       productId: item._id,
@@ -171,7 +215,7 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
         <Col className="invoice-date text-left">Fecha: {currentDate}</Col>
       </Row>
       <Row className="client-details">
-        <Col xs={12}>
+        <Col xs={6}>
           <div className="client-name">{clienteData.name}</div>
           <div className="client-info">{clienteData.nitCedula}</div>
           <div className="client-info">{clienteData.phoneNumber}</div>
@@ -189,6 +233,7 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
                 onRemoveProduct={onRemoveProduct}
                 onIncrement={onIncrement}
                 onDecrement={onDecrement}
+                onPriceChange={onPriceChange} 
               />
             ))}
             {impresionesData.map((impresion, index) => (
@@ -213,34 +258,63 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
       </ListGroup>
 
 </div>
-<div className="footer">
-<div className="element-background adjustments-and-summary">
-  <div className="adjustment-buttons-container">
-    <div className="adjustment-buttons">
+<div className="adjustment-buttons">
       {/* Botones de ajuste de la factura */}
-      {[1000, 2000, 5000].map((value, index) => (
-        <Button key={index} className={`adjust-button ${value < 0 ? 'negative' : ''}`} onClick={() => handleAdjustTotal(value)}>
-          {value >= 0 ? `+${value}` : value}
+      
+      {['Efectivo', 'Nequi','Daviplata','Bancolombia'].map((method, index) => (
+        <Button key={index} 
+        className={`adjust-button-pago ${selectedPaymentMethod === method ? 'seleccionado' : ''}`}
+        onClick={() => handlePaymentMethodClick(method)}
+        >
+          {method}
         </Button>
       ))}
+ </div>
+
+<div className="footer">
+
+        <div>
+          <FormGroup className="d-flex align-items-center">
+            <Label for="amountPaidInput" className="mr-2 mb-0">Paga con:</Label>
+            <Input
+              id="amountPaidInput"
+              type="number"
+              placeholder="Introduce el monto"
+              value={cantidadPaga}
+             onChange={handleCantidadPagaChange}
+              className="input-paga-con"
+            />
+            
+          </FormGroup>
+        </div>
+    <div className="element-background adjustments-and-summary">
+      <div className="adjustment-buttons-container">
+        <div className="adjustment-buttons">
+          {[1000, 2000, 5000].map((value, index) => (
+            <Button key={index} className={`adjust-button ${value < 0 ? 'negative' : ''}`} onClick={() => handleAdjustTotal(value)}>
+              {value >= 0 ? `+${value}` : value}
+            </Button>
+          ))}
+        </div>
+        <div className="adjustment-buttons">
+          {[-1000, -2000, -5000].map((value, index) => (
+            <Button key={index} className={`adjust-button negative`} onClick={() => handleAdjustTotal(value)}>
+              {value}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+    
+      <div className="payment-details">
+        <span>Medio de pago: {paymentDetails.paymentMethod}</span>
+        <span>Paga con: ${paymentDetails.amountPaid}</span>
+        <span>Total Factura: ${adjustedTotal.toLocaleString()}</span>
+        <span>Cambio: ${adjustedChange}</span>
+      </div>
     </div>
-    <div className="adjustment-buttons">
-      {/* Botones de ajuste negativo */}
-      {[-1000, -2000, -5000].map((value, index) => (
-        <Button key={index} className={`adjust-button negative`} onClick={() => handleAdjustTotal(value)}>
-          {value}
-        </Button>
-      ))}
-    </div>
-  </div>
-  <div className="payment-details">
-    {/* Detalles del pago */}
-    <span>Medio de pago: {paymentDetails.paymentMethod}</span>
-    <span>Paga con: ${paymentDetails.amountPaid}</span>
-    <span>Total Factura: ${adjustedTotal.toLocaleString()}</span>
-    <span>Cambio: ${adjustedChange.toLocaleString()}</span>
-  </div>
-</div>
+  
+
 <Button color="primary" className="finalize-invoice-button" onClick={handleFinishInvoice}>
   Finalizar Factura
 </Button>
@@ -249,4 +323,4 @@ function InvoicePreview({ clienteData, productosData, impresionesData,serviciosD
   );
 }
 
-export default InvoicePreview
+export default InvoicePreview;

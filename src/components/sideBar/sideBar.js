@@ -1,6 +1,6 @@
 // Sidebar.js
 import React from 'react';
-import { FaCashRegister, FaProductHunt, FaTools, FaUser } from 'react-icons/fa';
+import { FaProductHunt, FaTools, FaUser } from 'react-icons/fa';
 import { FaMoneyBill1 } from "react-icons/fa6";
 import { Button, Col } from 'reactstrap';
 import { useNavigation } from '../context/contextNewBill'; // Asegúrate de tener la ruta correcta al contexto
@@ -24,13 +24,13 @@ function Sidebar() {
       >
         <FaProductHunt className="newBillIcon" />
       </Button>
-      <Button
+     {/*} <Button
         color="success"
         className={`newBillMenuItem ${activeScreen === 'enviar' ? 'active' : ''}`}
         onClick={() => changeScreen('enviar')}
       >
         <FaCashRegister className="newBillIcon" />
-      </Button>
+  </Button>*/}
       <Button
         color="warning"
         className={`newBillMenuItem ${activeScreen === 'stock' ? 'active' : ''}`}

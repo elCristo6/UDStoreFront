@@ -59,16 +59,15 @@ const HistoryBill = () => {
                         {bills.map(bill => (
                             <tr key={bill._id}>
                                 <td>{bill.consecutivo}</td>
-
                                 <td>{getType(bill)}</td> {/* Muestra el tipo de ítem */}
                                 <td className="detalle">
-                                    {bill.products.map((product, index) => (
+                                    {bill.products.length > 0 && bill.products.map((product, index) => (
                                         <div key={index}>{product.product.name}</div>
                                     ))}
-                                    {bill.servicio.map((serv, index) => (
+                                    {bill.servicio.length > 0 && bill.products.length === 0 && bill.servicio.map((serv, index) => (
                                         <div key={index}>{serv.nombre}</div>
                                     ))}
-                                    {bill.impresiones.map((imp, index) => (
+                                    {bill.impresiones.length > 0 && bill.products.length === 0 && bill.impresiones.map((imp, index) => (
                                         <div key={index}>{imp.descripcionImpresion}</div>
                                     ))}
                                 </td>
